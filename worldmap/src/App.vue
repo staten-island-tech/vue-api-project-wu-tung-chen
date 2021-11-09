@@ -11,10 +11,10 @@
 export default {
    data() {
       return {
-         latTop: 52,
-         latBot: 22,
-         longLeft: 127,
-         longRight: 62,
+         latTop: 51.8,
+         latBot: 21.48,
+         longLeft: 126.27,
+         longRight: 64.42,
       }
    },
    methods: {
