@@ -1,7 +1,7 @@
 <template>
   <div id="app">
      <div class="map-container">
-        <img class="map" src="@/assets/us-map.jpg" alt="" @click="mapClick($event)">
+        <img class="map" src="@/assets/us-map.jpg" alt="" @click="getCoords($event)">
      </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
       }
    },
    methods: {
-      mapClick(event) {
+      getCoords(event) {
          const elRect = event.currentTarget.getBoundingClientRect();
          const pixelsX = event.clientX - elRect.left;
          const pixelsY = event.clientY - elRect.top;
@@ -29,10 +29,10 @@ export default {
          const latRange = this.latBot - this.latTop;
          const longRange = this.longRight - this.longLeft;
 
-         const latitude = this.latTop + (percentX * latRange);
-         const longitude = this.longLeft + (percentY * longRange);
+         const latitude = this.latTop + (percentY * latRange);
+         const longitude = this.longLeft + (percentX * longRange);
 
-         console.log(latitude,longitude);
+         console.log(`${latitude}, ${longitude}`);
       }
    },
    mounted () {},
