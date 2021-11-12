@@ -13,8 +13,8 @@ export default {
       return {
          latTop: 51.8,
          latBot: 21.48,
-         longLeft: 126.27,
-         longRight: 64.42,
+         longLeft: -126.27,
+         longRight: -64.42,
       }
    },
    methods: {
@@ -33,6 +33,9 @@ export default {
          const longitude = this.longLeft + (percentX * longRange);
 
          console.log(`${latitude}, ${longitude}`);
+      },
+      getAPICall(){
+         
       }
    },
    mounted () {},
