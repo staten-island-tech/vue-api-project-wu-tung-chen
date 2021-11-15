@@ -31,8 +31,26 @@
    --pixel-size: 6;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 62.5%;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
 body {
-   background: #b5fcf6;
+   background: url(../src/assets/bettermap.png) no-repeat center;
+   background-size: contain;
+   background-color: rgb(204, 253, 255);
+
+   margin: 0;
+   height: 100vh;
+   display: flex;
+   // align-items: center;
+   // justify-content: center;
+   // flex-direction: column;
 }
 
 .Character {
