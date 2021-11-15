@@ -1,63 +1,84 @@
-<template lang="en">
+<template>
+
   <div id="app">
-    <RoomOne v-if="roomOneLoad"/>
+     <div class="Character">   
+      <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" /> 
+      <img class="Character_spritesheet pixelart face-down" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" /> 
+    </div>
+
+    <div class="Character">   
+      <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" /> 
+      <img class="Character_spritesheet pixelart face-right" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" /> 
+    </div>
+
+     <div class="Character">   
+      <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" /> 
+      <img class="Character_spritesheet pixelart face-left" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" /> 
+    </div>
+
+        <div class="Character">   
+      <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" /> 
+      <img class="Character_spritesheet pixelart face-up" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" /> 
+    </div>
+
   </div>
+
 </template>
 
-<script>
+<style lang="scss">
 
-  import RoomOne from "@/components/RoomOne/RoomOne";
+:root {
+   --pixel-size: 6;
+}
 
-  export default {
-    name: "App",
-    components: {
-      RoomOne,
-    },
-    data() {
-      return {
-        roomOneLoad: false,
-      };
-    },
-    methods: {
-      StartGame: function() {
-        this.start = true;
-        this.roomOneLoad = true;
-      },
-      Restart: function() {
-        this.roomOneLoad = false;
-        this.start = false;
-      },
-    },
-  };
-</script>
+body {
+   background: #b5fcf6;
+}
 
-<style>
+.Character {
+   width: calc(32px * var(--pixel-size));
+   height: calc(32px * var(--pixel-size));
+   overflow: hidden;
+   position: relative;
+   margin: 4em auto;
+}
 
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+.Character_spritesheet {
+   animation: moveSpritesheet 1s steps(4) infinite;
+   width: calc(128px * var(--pixel-size));
+   position: absolute;
+   
+}
+.Character_shadow {
+   position: absolute;
+   width: calc(32px * var(--pixel-size));
+   height: calc(32px * var(--pixel-size));
+}
 
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    text-align: center;
-    color: #2c3e50;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+.pixelart {
+   image-rendering: pixelated;
+}
 
-  button {
-    text-align: center;
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    color: white;
-    font-family: "Roboto Mono", monospace;
-    transition: 0.3s;
-  }
+.face-right {
+   top: calc(-32px * var(--pixel-size));
+}
+.face-up {
+   top: calc(-64px * var(--pixel-size));
+}
+
+.face-left {
+   top: calc(-96px * var(--pixel-size));
+}
+
+
+@keyframes moveSpritesheet {
+   from {
+      transform: translate3d(0px,0,0)
+   }
+   to {
+      transform: translate3d(-100%,0,0)
+   }
+}
+
 
 </style>
