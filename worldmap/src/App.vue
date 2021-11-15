@@ -38,6 +38,7 @@ export default {
    },
    created() {
       EventService.getMap();
+      //EventService.getMapRefactored();
    },
 };
 
