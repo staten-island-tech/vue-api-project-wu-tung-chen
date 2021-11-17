@@ -2,12 +2,13 @@
   <div id="app">
      <div class="map-container">
         <img class="map" src="@/assets/us-map.jpg" alt="" @click="getCoords($event)">
+        <img :src="currentMapURL" alt="">
      </div>
   </div>
 </template>
 
 <script>
-import EventService from "@/services/EventService.js";
+import APICalls from "@/services/APICalls.js";
 
 export default {
    data() {
@@ -16,6 +17,8 @@ export default {
          latBot: 21.48,
          longLeft: -126.27,
          longRight: -64.42,
+
+         currentMapURL: null,
       }
    },
    methods: {
@@ -37,8 +40,7 @@ export default {
       },
    },
    created() {
-      EventService.getMap();
-      //EventService.getMapRefactored();
+      this.currentMapURL = APICalls.getMap();
    },
 };
 
