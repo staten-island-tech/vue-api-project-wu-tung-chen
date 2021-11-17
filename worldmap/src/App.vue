@@ -41,7 +41,7 @@
 }
 
 body {
-   background: url(../src/assets/bettermap.png) no-repeat center;
+   background: url(../src/assets/Pixel_Map.png) no-repeat center;
    background-size: contain;
    background-color: rgb(204, 253, 255);
 
