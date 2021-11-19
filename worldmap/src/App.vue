@@ -40,7 +40,7 @@ export default {
       },
    },
    created() {
-      this.currentMapURL = APICalls.getMap();
+      APICalls.getMap().then(imageURL => (this.currentMapURL = imageURL));
    },
 };
 
