@@ -2,7 +2,7 @@
   <div id="app">
      <div class="map-container">
         <img class="map" src="@/assets/us-map.jpg" alt="" @click="getCoords($event)">
-        <img :src="currentMapURL" alt="">
+        <img :src="currentMapURL" alt="" @click="getCoords($event)">
      </div>
   </div>
 </template>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style scope>
 
 #app {
    width: 100%;

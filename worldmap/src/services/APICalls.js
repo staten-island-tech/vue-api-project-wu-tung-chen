@@ -11,7 +11,6 @@ export default {
       ); // This returns an image/jpeg
       const imageBlob = await response.blob(); // Returns a blob, whatever that is
       const imageURL = URL.createObjectURL(imageBlob); // Generates a url for that image
-      console.log(`In JS: ${imageURL}`);
       return imageURL; // Returns a promise
     } catch (error) {
       // error
