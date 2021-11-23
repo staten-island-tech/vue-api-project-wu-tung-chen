@@ -4,7 +4,7 @@ export default {
   async getMap(latTop, longLeft, latBot, longRight) {
     try {
       const response = await fetch(
-        `http://www.mapquestapi.com/staticmap/v4/getmap?key=${mapQuestKey}&bestfit=${latTop},${longLeft},${latBot},${longRight}&size=880,540`,
+        `http://www.mapquestapi.com/staticmap/v4/getmap?key=${mapQuestKey}&bestfit=${latTop},${longLeft},${latBot},${longRight}&size=1000,600`,
         {
           method: "GET",
         }

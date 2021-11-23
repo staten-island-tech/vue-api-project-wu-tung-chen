@@ -1,7 +1,13 @@
 <template>
   <div class="home">
-    <img :src="mapURL" alt="Map" @click="getCoords($event)" />
-    <div class="direction-container">
+    <div class="map-container">
+      <img class="quest-map" :src="mapURL" alt="Map" @click="getCoords($event)" />
+      <canvas class="quest-canvas" width="1120" height="672">
+        <img src />
+      </canvas>
+    </div>
+    
+    <!-- <div class="direction-container">
       <div @click="newMapNW()">NW</div>
       <div @click="newMapNorth()">N</div>
       <div @click="newMapNE()">NE</div>
@@ -11,12 +17,8 @@
       <div @click="newMapSW()">SW</div>
       <div @click="newMapSouth()">S</div>
       <div @click="newMapSE()">SE</div>
-    </div>
+    </div> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-
-    <canvas width="1480" height="850">
-      <img src />
-    </canvas>
   </div>
 </template>
 
@@ -294,6 +296,21 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
+.map-container {
+  width: 70rem;
+  height: 42rem;
+}
+
+.quest-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* .quest-canvas {
+  width: 100%;
+  height: 100%;
+} */
 
 .direction-container {
   width: 10rem;
