@@ -9,9 +9,17 @@ export default {
           method: "GET",
         }
       ); // This returns an image/jpeg
-      const imageBlob = await response.blob(); // Returns a blob, whatever that is
-      const imageURL = URL.createObjectURL(imageBlob); // Generates a url for that image
-      return imageURL; // Returns a promise
+
+      console.log(response);
+
+      const imageBlob = await response.blob();
+
+      if (imageBlob.size != 0) {
+        // Generates URL and returns it as a promise (since it's inside async function)
+        return URL.createObjectURL(imageBlob);
+      } else {
+        console.log(`No image returned!`);
+      }
     } catch (error) {
       // error
       console.log(`An error has occured: ${error}`);
