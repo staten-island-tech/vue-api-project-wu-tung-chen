@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    
     <img :src="mapURL" alt="Map" @click="getCoords($event)">
     <div class="direction-container">
       <div @click="newMapNW()">NW</div>
@@ -187,6 +188,7 @@ export default {
   .div-no-color {
     background-color: white !important;
     border: 0rem !important;
+    cursor: default !important;
   }
 
   .direction-container > div {
