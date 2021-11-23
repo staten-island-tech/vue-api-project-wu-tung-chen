@@ -1,32 +1,75 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+     <div class="map-container">
+        <img class="map" src="@/assets/us-map.jpg" alt="" @click="getCoords($event)">
+        <img :src="currentMapURL" alt="" @click="getCoords($event)">
+     </div>
   </div>
 </template>
 
-<style lang="scss">
+<script>
+import APICalls from "@/services/APICalls.js";
+
+export default {
+   data() {
+      return {
+         latTop: 51.8,
+         latBot: 21.48,
+         longLeft: -126.27,
+         longRight: -64.42,
+
+         currentMapURL: null,
+      }
+   },
+   methods: {
+      getCoords(event) {
+         const elRect = event.currentTarget.getBoundingClientRect();
+         const pixelsX = event.clientX - elRect.left;
+         const pixelsY = event.clientY - elRect.top;
+
+         const percentX = pixelsX / elRect.width;
+         const percentY = pixelsY / elRect.height;
+
+         const latRange = this.latBot - this.latTop;
+         const longRange = this.longRight - this.longLeft;
+
+         const latitude = this.latTop + (percentY * latRange);
+         const longitude = this.longLeft + (percentX * longRange);
+
+         console.log(`${latitude}, ${longitude}`);
+      },
+   },
+   created() {
+      APICalls.getMap().then(imageURL => (this.currentMapURL = imageURL));
+   },
+};
+
+</script>
+
+
+<style scope>
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+   width: 100%;
+   height: 100%;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+   background: #b5fcf6;
+   margin: 0 !important;
+   padding: 0 !important;
 }
+
+.map-container {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+.map {
+   width: 60rem;
+}
+
 </style>
