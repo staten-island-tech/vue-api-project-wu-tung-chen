@@ -126,6 +126,55 @@ export default {
       this.newMap();
     },
     newMap() {
+      /* switch (direction.toUpperCase()) {
+        case N:
+          this.latTop += this.latInc;
+          this.latBot += this.latInc;
+          break;
+        case S:
+          this.latTop -= this.latInc;
+          this.latBot -= this.latInc;
+          break;
+        case E:
+          this.longLeft += this.longInc;
+          this.longRight += this.longInc;
+          break;
+        case W:
+          this.longLeft -= this.longInc;
+          this.longRight -= this.longInc;
+          break;
+        case NE:
+          this.latTop += this.latInc * 0.7;
+          this.latBot += this.latInc * 0.7;
+
+          this.longLeft += this.longInc * 0.7;
+          this.longRight += this.longInc * 0.7;
+          break;
+        case NW:
+          this.latTop += this.latInc * 0.7;
+          this.latBot += this.latInc * 0.7;
+
+          this.longLeft -= this.longInc * 0.7;
+          this.longRight -= this.longInc * 0.7;
+          break;
+        case SE:
+          this.latTop -= this.latInc * 0.7;
+          this.latBot -= this.latInc * 0.7;
+
+          this.longLeft += this.longInc * 0.7;
+          this.longRight += this.longInc * 0.7;
+          break;
+        case SW:
+          this.latTop -= this.latInc * 0.7;
+          this.latBot -= this.latInc * 0.7;
+
+          this.longLeft -= this.longInc * 0.7;
+          this.longRight -= this.longInc * 0.7;
+          break;
+        default:
+          console.log(`NEW MAP SWITCH: Direction NOT Valid: ${direction}`);
+          break;
+      } */
       this.coordBound();
 
       APICalls.getMap(
@@ -230,6 +279,7 @@ export default {
         scaled_width,
         scaled_height
       );
+      console.log(canvasX,canvasY);
     }
 
     loadImage();
