@@ -59,7 +59,6 @@ export default {
           county: "Kangdong",
           region: "Pyongyang",
           country: "NK",
-        },
         }
       ]
     };
