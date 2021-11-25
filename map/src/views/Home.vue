@@ -375,7 +375,7 @@ body {
   transform: scale(1.05);
 }
 
-#direction-container > div:active {
+.direction-container > div:active {
   transform: scale(0.75);
 }
 
