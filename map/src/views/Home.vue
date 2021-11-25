@@ -1,24 +1,24 @@
 <template>
   <div class="home">
-    <div class="map-container">
-      <img class="quest-map" :src="mapURL" alt="Map" @click="getCoords($event)" />
+    <div class="map-container" @click="getCoords($event)">
+      <img class="quest-map" :src="mapURL" alt="Map"/>
       <div id="canvas">
-      <canvas width="1120" height="672">
-        <img src />
-      </canvas>
+        <canvas width="1120" height="672">
+          <img src />
+        </canvas>
       </div>
     </div>
     
     <div class="direction-container">
-      <div @click="newMapNW()">NW</div>
-      <div @click="newMapNorth()">N</div>
-      <div @click="newMapNE()">NE</div>
-      <div @click="newMapWest()">W</div>
+      <div @click="newMap('NW')">NW</div>
+      <div @click="newMap('N')">N</div>
+      <div @click="newMap('NE')">NE</div>
+      <div @click="newMap('W')">W</div>
       <div class="div-no-color"></div>
-      <div @click="newMapEast()">E</div>
-      <div @click="newMapSW()">SW</div>
-      <div @click="newMapSouth()">S</div>
-      <div @click="newMapSE()">SE</div>
+      <div @click="newMap('E')">E</div>
+      <div @click="newMap('SW')">SW</div>
+      <div @click="newMap('S')">S</div>
+      <div @click="newMap('SE')">SE</div>
     </div>
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
@@ -44,11 +44,22 @@ export default {
 
       sourceMap: require("@/assets/map-us.jpg"),
       currentMapURL: null,
+
+      pins: [
+        {
+          lat: null,
+          long: null,
+          county: null,
+          region: null,
+          country: null,
+        }
+      ]
     };
   },
   methods: {
     getCoords(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
+
       const pixelsX = event.clientX - elRect.left;
       const pixelsY = event.clientY - elRect.top;
 
@@ -58,133 +69,67 @@ export default {
       const latRange = this.latBot - this.latTop;
       const longRange = this.longRight - this.longLeft;
 
-      // Calculates lat/long and rounds to 1 decimal
-      const latitude = (this.latTop + percentY * latRange).toFixed(1);
-      const longitude = (this.longLeft + percentX * longRange).toFixed(1);
+      // Calculates lat/long and rounds to 2 decimal
+
+      const latitude = (this.latTop + percentY * latRange).toFixed(2);
+      const longitude = (this.longLeft + percentX * longRange).toFixed(2);
 
       console.log(`${latitude}, ${longitude}`);
     },
-    
-    newMapNorth() {
-      this.latTop += this.latInc;
-      this.latBot += this.latInc;
-
-      this.newMap();
-    },
-    newMapSouth() {
-      this.latTop -= this.latInc;
-      this.latBot -= this.latInc;
-
-      this.newMap();
-    },
-    newMapEast() {
-      this.longLeft += this.longInc;
-      this.longRight += this.longInc;
-
-      this.newMap();
-    },
-    newMapWest() {
-      this.longLeft -= this.longInc;
-      this.longRight -= this.longInc;
-
-      this.newMap();
-    },
-    newMapNE() {
-      this.latTop += this.latInc * 0.7;
-      this.latBot += this.latInc * 0.7;
-
-      this.longLeft += this.longInc * 0.7;
-      this.longRight += this.longInc * 0.7;
-
-      this.newMap();
-    },
-    newMapNW() {
-      this.latTop += this.latInc * 0.7;
-      this.latBot += this.latInc * 0.7;
-
-      this.longLeft -= this.longInc * 0.7;
-      this.longRight -= this.longInc * 0.7;
-
-      this.newMap();
-    },
-    newMapSE() {
-      this.latTop -= this.latInc * 0.7;
-      this.latBot -= this.latInc * 0.7;
-
-      this.longLeft += this.longInc * 0.7;
-      this.longRight += this.longInc * 0.7;
-
-      this.newMap();
-    },
-    newMapSW() {
-      this.latTop -= this.latInc * 0.7;
-      this.latBot -= this.latInc * 0.7;
-
-      this.longLeft -= this.longInc * 0.7;
-      this.longRight -= this.longInc * 0.7;
-
-      this.newMap();
-    },
-    newMap() {
-      /* switch (direction.toUpperCase()) {
-        case N:
+    newMap(direction) {
+      // Changes lat/long based on input direction
+      switch (direction.toUpperCase()) {
+        case "N":
           this.latTop += this.latInc;
           this.latBot += this.latInc;
           break;
-        case S:
+        case "S":
           this.latTop -= this.latInc;
           this.latBot -= this.latInc;
           break;
-        case E:
+        case "E":
           this.longLeft += this.longInc;
           this.longRight += this.longInc;
           break;
-        case W:
+        case "W":
           this.longLeft -= this.longInc;
           this.longRight -= this.longInc;
           break;
-        case NE:
+        case "NE":
           this.latTop += this.latInc * 0.7;
           this.latBot += this.latInc * 0.7;
 
           this.longLeft += this.longInc * 0.7;
           this.longRight += this.longInc * 0.7;
           break;
-        case NW:
+        case "NW":
           this.latTop += this.latInc * 0.7;
           this.latBot += this.latInc * 0.7;
 
           this.longLeft -= this.longInc * 0.7;
           this.longRight -= this.longInc * 0.7;
           break;
-        case SE:
+        case "SE":
           this.latTop -= this.latInc * 0.7;
           this.latBot -= this.latInc * 0.7;
 
           this.longLeft += this.longInc * 0.7;
           this.longRight += this.longInc * 0.7;
           break;
-        case SW:
+        case "SW":
           this.latTop -= this.latInc * 0.7;
           this.latBot -= this.latInc * 0.7;
 
           this.longLeft -= this.longInc * 0.7;
           this.longRight -= this.longInc * 0.7;
           break;
-        default:
-          console.log(`NEW MAP SWITCH: Direction NOT Valid: ${direction}`);
+        default: 
+          console.log(`Error: newMap() Invalid Direction: ${direction.toUpperCase()}`);
           break;
-      } */
-      this.coordBound();
+      }
 
-      APICalls.getMap(
-        this.latTop,
-        this.longLeft,
-        this.latBot,
-        this.longRight
-      ).then((imageURL) => (this.currentMapURL = imageURL));
-    },
-    coordBound() {
+      // COORDINATE BOUND
+
       // If latitudeTop is ABOVE north pole, cap it to the north pole
       if (this.latTop > 85) {
         this.latTop = 85;
@@ -212,7 +157,167 @@ export default {
       if (this.longRight < -180) {
         this.longRight += 360;
       }
+
+      APICalls.getMap(
+        this.latTop,
+        this.longLeft,
+        this.latBot,
+        this.longRight
+      ).then((imageURL) => (this.currentMapURL = imageURL));
+
+      this.runSprite();
     },
+    runSprite() {
+      const spriteNumber = this.spriteInstance;
+      this.spriteInstance++;
+      // sprite attributes
+      // for reference: sprite is 14px by 17px (multiply this by scale)
+      const scale = 3;
+      const width = 16;
+      const height = 18;
+      const scaled_width = scale * width;
+      const scaled_height = scale * height;
+      const cycle_loop = [0, 1, 0, 2];
+      const facing_down = 0;
+      const facing_up = 1;
+      const facing_left = 2;
+      const facing_right = 3;
+      const frame_limit = 12;
+      const movement_speed = 5;
+
+      let canvas = document.querySelector("canvas");
+      let ctx = canvas.getContext("2d");
+      let keyPresses = {};
+      let currentDirection = facing_down;
+      let currentLoopIndex = 0;
+      let frameCount = 0;
+      let positionX = 0;
+      let positionY = 0;
+      let img = new Image();
+
+      const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
+      const latTop = this.latTop;
+      const latBot = this.latBot;
+      const longLeft = this.longLeft;
+      const longRight = this.longRight;
+
+      window.addEventListener("keydown", keyDownListener);
+      function keyDownListener(event) {
+        keyPresses[event.key] = true;
+      }
+
+      window.addEventListener("keyup", keyUpListener);
+      function keyUpListener(event) {
+        keyPresses[event.key] = false;
+      }
+
+      function loadImage() {
+        img.src = require("@/assets/green-cap-character.png");
+        img.onload = function () {
+          window.requestAnimationFrame(gameLoop);
+        };
+      }
+
+      function drawFrame(frameX, frameY, canvasX, canvasY) {
+        ctx.drawImage(
+          img,
+          frameX * width,
+          frameY * height,
+          width,
+          height,
+          canvasX,
+          canvasY,
+          scaled_width,
+          scaled_height
+        );
+      }
+
+      loadImage();
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let hasMoved = false;
+
+        if (keyPresses.w) {
+          moveCharacter(0, -movement_speed, facing_up);
+          hasMoved = true;
+        } else if (keyPresses.s) {
+          moveCharacter(0, movement_speed, facing_down);
+          hasMoved = true;
+        }
+
+        if (keyPresses.a) {
+          moveCharacter(-movement_speed, 0, facing_left);
+          hasMoved = true;
+        } else if (keyPresses.d) {
+          moveCharacter(movement_speed, 0, facing_right);
+          hasMoved = true;
+        }
+
+        if (hasMoved) {
+          frameCount++;
+          if (frameCount >= frame_limit) {
+            frameCount = 0;
+            currentLoopIndex++;
+            if (currentLoopIndex >= cycle_loop.length) {
+              currentLoopIndex = 0;
+            }
+          }
+        }
+
+        if (!hasMoved) {
+          currentLoopIndex = 0;
+        }
+
+        drawFrame(
+          cycle_loop[currentLoopIndex],
+          currentDirection,
+          positionX,
+          positionY
+        );
+
+        // Code to get lad/long for sprite
+
+        //console.log(`Sprite Pixels: ${positionX + (scaled_width / 2)}, ${positionY + (scaled_height * 3 / 4)}`);
+
+        // Gets sprite pixels WITH offset
+        const spritePixelX = positionX + (scaled_width / 2);
+        const spritePixelY = positionY + (scaled_height * 3 / 4);
+
+        const percentX = spritePixelX / elMapRectangle.width;
+        const percentY = spritePixelY / elMapRectangle.height;
+
+        const latRange = latBot - latTop;
+        const longRange = longRight - longLeft;
+
+        // Calculates lat/long and rounds to 2 decimal
+
+        const latitude = (latTop + percentY * latRange).toFixed(2);
+        const longitude = (longLeft + percentX * longRange).toFixed(2);
+
+        console.log(`Instance ${spriteNumber}: ${latitude}, ${longitude}`);
+
+
+        window.requestAnimationFrame(gameLoop);
+      }
+
+      function moveCharacter(deltaX, deltaY, direction) {
+        if (
+          positionX + deltaX > 0 &&
+          positionX + scaled_width + deltaX < canvas.width
+        ) {
+          positionX += deltaX;
+        }
+        if (
+          positionY + deltaY > 0 &&
+          positionY + scaled_height + deltaY < canvas.height
+        ) {
+          positionY += deltaY;
+        }
+        currentDirection = direction;
+      }
+    }
   },
   computed: {
     mapURL() {
@@ -222,128 +327,8 @@ export default {
     },
   },
 
-  mounted: function () {
-
-      // sprite attributes
-
-    const scale = 3.5;
-    const width = 16;
-    const height = 18;
-    const scaled_width = scale * width;
-    const scaled_height = scale * width;
-    const cycle_loop = [0, 1, 0, 2];
-    const facing_down = 0;
-    const facing_up = 1;
-    const facing_left = 2;
-    const facing_right = 3;
-    const frame_limit = 12;
-    const movement_speed = 5.5;
-
-    let canvas = document.querySelector("canvas");
-    let ctx = canvas.getContext("2d");
-    let keyPresses = {};
-    let currentDirection = facing_down;
-    let currentLoopIndex = 0;
-    let frameCount = 0;
-    let positionX = 0;
-    let positionY = 0;
-    let img = new Image();
-
-    window.addEventListener("keydown", keyDownListener);
-    function keyDownListener(event) {
-      keyPresses[event.key] = true;
-    }
-
-    window.addEventListener("keyup", keyUpListener);
-    function keyUpListener(event) {
-      keyPresses[event.key] = false;
-    }
-
-    function loadImage() {
-      img.src =
-        "https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png";
-      img.onload = function () {
-        window.requestAnimationFrame(gameLoop);
-      };
-    }
-
-    function drawFrame(frameX, frameY, canvasX, canvasY) {
-      ctx.drawImage(
-        img,
-        frameX * width,
-        frameY * height,
-        width,
-        height,
-        canvasX,
-        canvasY,
-        scaled_width,
-        scaled_height
-      );
-      console.log(canvasX,canvasY);
-    }
-
-    loadImage();
-
-    function gameLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      let hasMoved = false;
-
-      if (keyPresses.w) {
-        moveCharacter(0, -movement_speed, facing_up);
-        hasMoved = true;
-      } else if (keyPresses.s) {
-        moveCharacter(0, movement_speed, facing_down);
-        hasMoved = true;
-      }
-
-      if (keyPresses.a) {
-        moveCharacter(-movement_speed, 0, facing_left);
-        hasMoved = true;
-      } else if (keyPresses.d) {
-        moveCharacter(movement_speed, 0, facing_right);
-        hasMoved = true;
-      }
-
-      if (hasMoved) {
-        frameCount++;
-        if (frameCount >= frame_limit) {
-          frameCount = 0;
-          currentLoopIndex++;
-          if (currentLoopIndex >= cycle_loop.length) {
-            currentLoopIndex = 0;
-          }
-        }
-      }
-
-      if (!hasMoved) {
-        currentLoopIndex = 0;
-      }
-
-      drawFrame(
-        cycle_loop[currentLoopIndex],
-        currentDirection,
-        positionX,
-        positionY
-      );
-      window.requestAnimationFrame(gameLoop);
-    }
-
-    function moveCharacter(deltaX, deltaY, direction) {
-      if (
-        positionX + deltaX > 0 &&
-        positionX + scaled_width + deltaX < canvas.width
-      ) {
-        positionX += deltaX;
-      }
-      if (
-        positionY + deltaY > 0 &&
-        positionY + scaled_height + deltaY < canvas.height
-      ) {
-        positionY += deltaY;
-      }
-      currentDirection = direction;
-    }
+  mounted() {
+    this.runSprite();
   },
 };
 

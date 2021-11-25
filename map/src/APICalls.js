@@ -1,5 +1,7 @@
 const mapQuestKey = process.env.VUE_APP_MAPQUEST_API_KEY;
 
+let previousMapURL = null;
+
 export default {
   async getMap(latTop, longLeft, latBot, longRight) {
     try {
@@ -16,8 +18,13 @@ export default {
       } else {
         const imageBlob = await response.blob();
 
+        // Removes link to previous image (in order to keep memory usage down)
+
+        URL.revokeObjectURL(previousMapURL);
+
         // Generates a URL and returns as a promise since it's an async function
-        return URL.createObjectURL(imageBlob);
+        previousMapURL = URL.createObjectURL(imageBlob);
+        return previousMapURL;
       }
     } catch (error) {
       // error
