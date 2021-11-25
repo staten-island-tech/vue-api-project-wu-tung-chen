@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <div class="map-container" @click="getCoords($event)">
+    <div class="map-container" @click="addPin($event)">
       <img class="quest-map" :src="mapURL" alt="Map"/>
       <div id="canvas">
         <canvas width="1120" height="672">
           <img src />
         </canvas>
+      </div>
+      <div class="pin-container">
+        <Pin v-for="(pin, index) in pins" :key="index" :pinData="pin"></Pin>
       </div>
     </div>
     
@@ -21,17 +24,19 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import APICalls from "@/APICalls.js";
+import Pin from '@/components/Pin.vue';
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Pin,
+  },
   data() {
     return {
       latTop: 50,
@@ -47,17 +52,17 @@ export default {
 
       pins: [
         {
-          lat: null,
-          long: null,
-          county: null,
-          region: null,
-          country: null,
-        }
+          lat: 39,
+          long: 126,
+          county: "Kangdong",
+          region: "Pyongyang",
+          country: "NK",
+        },
       ]
     };
   },
   methods: {
-    getCoords(event) {
+    addPin(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
 
       const pixelsX = event.clientX - elRect.left;
@@ -75,6 +80,18 @@ export default {
       const longitude = (this.longLeft + percentX * longRange).toFixed(2);
 
       console.log(`${latitude}, ${longitude}`);
+
+      APICalls.getPlaceData(
+        latitude,
+        longitude
+      ).then((locationData) => (this.pins.push({
+        lat: locationData.latitude.toFixed(2),
+        long: locationData.longitude.toFixed(2),
+        county: locationData.county,
+        region: locationData.region_code,
+        country: locationData.country_code,
+      })));
+
     },
     newMap(direction) {
       // Changes lat/long based on input direction
