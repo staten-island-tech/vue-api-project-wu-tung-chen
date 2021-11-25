@@ -24,6 +24,8 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+
   </div>
 </template>
 
@@ -58,12 +60,18 @@ export default {
           region: "Pyongyang",
           country: "NK",
         },
+        }
       ]
     };
   },
 
   methods: {
-    addPin(event) {
+
+    addPin($event){
+      this.$event = $event
+    },
+    
+    getCoords(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
 
       const pixelsX = event.clientX - elRect.left;
@@ -83,14 +91,14 @@ export default {
       console.log(`${latitude}, ${longitude}`);
 
       APICalls.getPlaceData(
-        latitude,
-        longitude
-      ).then((locationData) => (this.pins.push({
-        lat: locationData.latitude.toFixed(2),
-        long: locationData.longitude.toFixed(2),
-        county: locationData.county,
-        region: locationData.region_code,
-        country: locationData.country_code,
+          latitude,
+          longitude
+        ).then((locationData) => (this.pins.push({
+          lat: locationData.latitude.toFixed(2),
+          long: locationData.longitude.toFixed(2),
+          county: locationData.county,
+          region: locationData.region_code,
+          country: locationData.country_code,
       })));
 
     },
@@ -183,6 +191,7 @@ export default {
         this.latBot,
         this.longRight
       ).then((imageURL) => (this.currentMapURL = imageURL));
+
     },
 
     loadSprite() {
@@ -195,12 +204,12 @@ export default {
       const height = 48;
       const scaled_width = scale * width;
       const scaled_height = scale * height;
-      const cycle_loop = [0, 1, 0, 2];
+      const cycle_loop = [0, 1, 2, 3];
       const facing_down = 0;
       const facing_up = 3;
       const facing_left = 1;
       const facing_right = 2;
-      const frame_limit = 6;
+      const frame_limit = 9;
       const movement_speed = 5;
 
       let canvas = document.querySelector("canvas");
@@ -333,7 +342,7 @@ export default {
       }
     }
   },
-  
+
   computed: {
     mapURL() {
       // If the map is NOT null, then return it, otherwise return default map.
@@ -396,6 +405,10 @@ body {
   justify-content: space-evenly;
   align-items: center;
   margin-left: 60.3rem;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select:none;
 }
 
 .div-no-color {
@@ -413,7 +426,7 @@ body {
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
   color: rgb(11, 3, 41);
   cursor: pointer;
-  transition: all 0.9s;
+  transition: all 0.5s;
   margin: auto;
 }
 
@@ -424,11 +437,26 @@ body {
 }
 
 .direction-container > div:active {
-  transform: scale(0.5);
+  transform: scale(0.7);
 }
 
 .directions {
   font-size: 1.2rem;
+}
+
+.pin-container{
+  display: flex; 
+  justify-content: center;
+  padding: 1.7rem;
+    /* align-items: center;
+  align-self: center; */
+
+  /* display: flex;
+  justify-content: center;
+  width: 70rem;
+  height: 42rem;
+  position: absolute;
+  margin-top: -42.3rem; */
 }
 
 </style>
