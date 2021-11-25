@@ -61,6 +61,7 @@ export default {
       ]
     };
   },
+
   methods: {
     addPin(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
@@ -93,6 +94,7 @@ export default {
       })));
 
     },
+
     newMap(direction) {
       // Changes lat/long based on input direction
       switch (direction.toUpperCase()) {
@@ -182,9 +184,12 @@ export default {
         this.longRight
       ).then((imageURL) => (this.currentMapURL = imageURL));
     },
+
     loadSprite() {
+
       // sprite attributes
       // for reference: sprite is 14px by 17px (multiply this by scale)
+
       const scale = 1.5;
       const width = 32;
       const height = 48;
@@ -328,6 +333,7 @@ export default {
       }
     }
   },
+  
   computed: {
     mapURL() {
       // If the map is NOT null, then return it, otherwise return default map.
