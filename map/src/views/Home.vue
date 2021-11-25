@@ -444,18 +444,18 @@ body {
 }
 
 .pin-container{
-  display: flex; 
+  /* display: flex; 
   justify-content: center;
-  padding: 1.7rem;
-    /* align-items: center;
-  align-self: center; */
+  align-items: center;
+  align-self: center;
+  padding: 1.7rem; */
 
-  /* display: flex;
+  display: flex;
   justify-content: center;
   width: 70rem;
   height: 42rem;
   position: absolute;
-  margin-top: -42.3rem; */
+  margin-top: -42.3rem;
 }
 
 </style>

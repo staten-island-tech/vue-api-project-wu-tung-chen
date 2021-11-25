@@ -2,6 +2,7 @@
   <div>
     <h1> {{ pinData.lat }}, {{ pinData.long }} </h1>
     <h2> {{ pinData.county }}, {{ pinData.region }}, {{ pinData.country }}</h2>
+    <div class="pin2"> {{ pinData.pin }} </div>
   </div>
 </template>
 
@@ -25,36 +26,14 @@ export default {
 
 h1 {
   font-size: 2rem;
+  width: 70rem;
+  height: auto;
 }
 
 h2 {
   font-size: 1.5rem;
-}
-
-/* .pin1 {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-left: -115px;
-  
-  border-radius: 50% 50% 50% 0;
-  border: 4px solid #fff;
-  width: 20px;
-  height: 20px;
-  transform: rotate(-45deg);
-}
-
-.pin1::after {
-  position: absolute;
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  margin-left: -5px;
-  margin-top: -5px;
-  background-color: #fff;
+  width: 70rem;
+  height: auto;
 }
 
 .pin2 {
@@ -78,6 +57,5 @@ h2 {
   left: -6px;
   border: 10px solid transparent;
   border-top: 17px solid #fff;
-} */
-
+}
 </style>
