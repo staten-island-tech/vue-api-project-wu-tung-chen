@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <div class="map-container" @click="getCoords($event)">
+    <div class="map-container" @click="addPin($event)">
       <img class="quest-map" :src="mapURL" alt="Map"/>
       <div id="canvas">
         <canvas width="1120" height="672">
           <img src />
         </canvas>
+      </div>
+      <div class="pin-container">
+        <Pin v-for="(pin, index) in pins" :key="index" :pinData="pin"></Pin>
       </div>
     </div>
     
@@ -22,16 +25,20 @@
     </div>
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import APICalls from "@/APICalls.js";
+import Pin from '@/components/Pin.vue';
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Pin,
+  },
   data() {
     return {
       latTop: 50,
@@ -47,16 +54,22 @@ export default {
 
       pins: [
         {
-          lat: null,
-          long: null,
-          county: null,
-          region: null,
-          country: null,
+          lat: 39,
+          long: 126,
+          county: "Kangdong",
+          region: "Pyongyang",
+          country: "NK",
         }
       ]
     };
   },
+
   methods: {
+
+    addPin($event){
+      this.$event = $event
+    },
+    
     getCoords(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
 
@@ -75,7 +88,20 @@ export default {
       const longitude = (this.longLeft + percentX * longRange).toFixed(2);
 
       console.log(`${latitude}, ${longitude}`);
+
+      APICalls.getPlaceData(
+          latitude,
+          longitude
+        ).then((locationData) => (this.pins.push({
+          lat: locationData.latitude.toFixed(2),
+          long: locationData.longitude.toFixed(2),
+          county: locationData.county,
+          region: locationData.region_code,
+          country: locationData.country_code,
+      })));
+
     },
+
     newMap(direction) {
       // Changes lat/long based on input direction
       switch (direction.toUpperCase()) {
@@ -164,21 +190,25 @@ export default {
         this.latBot,
         this.longRight
       ).then((imageURL) => (this.currentMapURL = imageURL));
+
     },
+
     loadSprite() {
+
       // sprite attributes
       // for reference: sprite is 14px by 17px (multiply this by scale)
+
       const scale = 1.5;
       const width = 32;
       const height = 48;
       const scaled_width = scale * width;
       const scaled_height = scale * height;
-      const cycle_loop = [0, 1, 0, 2];
+      const cycle_loop = [0, 1, 2, 3];
       const facing_down = 0;
       const facing_up = 3;
       const facing_left = 1;
       const facing_right = 2;
-      const frame_limit = 6;
+      const frame_limit = 9;
       const movement_speed = 5;
 
       let canvas = document.querySelector("canvas");
@@ -311,6 +341,7 @@ export default {
       }
     }
   },
+
   computed: {
     mapURL() {
       // If the map is NOT null, then return it, otherwise return default map.
@@ -373,6 +404,10 @@ body {
   justify-content: space-evenly;
   align-items: center;
   margin-left: 60.3rem;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select:none;
 }
 
 .div-no-color {
@@ -390,7 +425,7 @@ body {
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
   color: rgb(11, 3, 41);
   cursor: pointer;
-  transition: all 0.9s;
+  transition: all 0.5s;
   margin: auto;
 }
 
@@ -401,11 +436,26 @@ body {
 }
 
 .direction-container > div:active {
-  transform: scale(0.5);
+  transform: scale(0.7);
 }
 
 .directions {
   font-size: 1.2rem;
+}
+
+.pin-container{
+  display: flex; 
+  justify-content: center;
+  padding: 1.7rem;
+    /* align-items: center;
+  align-self: center; */
+
+  /* display: flex;
+  justify-content: center;
+  width: 70rem;
+  height: 42rem;
+  position: absolute;
+  margin-top: -42.3rem; */
 }
 
 </style>

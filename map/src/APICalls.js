@@ -1,4 +1,5 @@
 const mapQuestKey = process.env.VUE_APP_MAPQUEST_API_KEY;
+const positionstackKey = process.env.VUE_APP_POSITIONSTACK_API_KEY;
 
 let previousMapURL = null;
 
@@ -28,7 +29,23 @@ export default {
       }
     } catch (error) {
       // error
-      console.log(`An error has occured: ${error}`);
+      console.log(`An MapQuestAPI error has occured: ${error}`);
+    }
+  },
+  async getPlaceData(latitude, longitude) {
+    try {
+      const response = await fetch(
+        `http://api.positionstack.com/v1/reverse?access_key=${positionstackKey}&query=${latitude},${longitude}&limit=1`,
+        {
+          method: "GET",
+        }
+      );
+
+      const DataJSON = await response.json();
+      return DataJSON.data[0];
+    } catch (error) {
+      // error
+      console.log(`An PositionstackAPI error has occured: ${error}`);
     }
   },
 };
