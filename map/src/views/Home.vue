@@ -10,15 +10,15 @@
     </div>
     
     <div class="direction-container">
-      <div @click="newMapNW()">NW</div>
-      <div @click="newMapNorth()">N</div>
-      <div @click="newMapNE()">NE</div>
-      <div @click="newMapWest()">W</div>
+      <div @click="newMapNW()"><h1 id="directions">NW</h1></div>
+      <div @click="newMapNorth()"><h1 id="directions">N</h1></div>
+      <div @click="newMapNE()"><h1 id="directions">NE</h1></div>
+      <div @click="newMapWest()"><h1 id="directions">W</h1></div>
       <div class="div-no-color"></div>
-      <div @click="newMapEast()">E</div>
-      <div @click="newMapSW()">SW</div>
-      <div @click="newMapSouth()">S</div>
-      <div @click="newMapSE()">SE</div>
+      <div @click="newMapEast()"><h1 id="directions">E</h1></div>
+      <div @click="newMapSW()"><h1 id="directions">SW</h1></div>
+      <div @click="newMapSouth()"><h1 id="directions">S</h1></div>
+      <div @click="newMapSE()"><h1 id="directions">SE</h1></div>
     </div>
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
@@ -177,18 +177,18 @@ export default {
 
       // sprite attributes
 
-    const scale = 3.5;
-    const width = 16;
-    const height = 18;
+    const scale = 1.5;
+    const width = 32;
+    const height = 48;
     const scaled_width = scale * width;
-    const scaled_height = scale * width;
+    const scaled_height = scale * height;
     const cycle_loop = [0, 1, 0, 2];
     const facing_down = 0;
-    const facing_up = 1;
-    const facing_left = 2;
-    const facing_right = 3;
-    const frame_limit = 12;
-    const movement_speed = 5.5;
+    const facing_up = 3;
+    const facing_left = 1;
+    const facing_right = 2;
+    const frame_limit = 6;
+    const movement_speed = 5;
 
     let canvas = document.querySelector("canvas");
     let ctx = canvas.getContext("2d");
@@ -212,7 +212,7 @@ export default {
 
     function loadImage() {
       img.src =
-        "https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png";
+        "http://untamed.wild-refuge.net/images/rpgxp/tokinoiori08.png";
       img.onload = function () {
         window.requestAnimationFrame(gameLoop);
       };
@@ -301,6 +301,19 @@ export default {
 
 <style>
 
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
+  background-size: cover;
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -310,6 +323,9 @@ export default {
 .map-container {
   width: 70rem;
   height: 42rem;
+  border: 0.7rem solid;
+  border-color: rgba(248, 246, 255);
+  box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
 }
 
 .quest-map {
@@ -322,23 +338,20 @@ export default {
   margin-top: -42.2rem;
 }
 
-/* .quest-canvas {
-  width: 100%;
-  height: 100%;
-} */
 
 .direction-container {
   width: 10rem;
   height: 10rem;
-  padding-top: 2rem;
+  padding-top: 0.6rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+  margin-left: 61.3rem;
 }
 
 .div-no-color {
-  background-color: white !important;
+  background: transparent !important;
   border: 0rem !important;
   cursor: default !important;
 }
@@ -346,9 +359,28 @@ export default {
 .direction-container > div {
   width: 3rem;
   height: 3rem;
-  background-color: pink;
   cursor: pointer;
+  background: linear-gradient(rgba(251, 249, 255, 0.7), rgba(251, 249, 255, 0.7)), url(../assets/travelers.jpg) no-repeat bottom;
+  text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
+  color: rgb(11, 3, 41);
+  cursor: pointer;
+  transition: all 0.9s;
   margin: auto;
-  border: 0.1rem solid;
 }
+
+.direction-container > div:hover{
+  background: linear-gradient(rgba(20, 4, 66, 0.5), rgba(20, 4, 66, 0.5)), url(../assets/cherryblossoms.jpg) no-repeat center;
+  color: whitesmoke;
+  transform: scale(1.05);
+}
+
+#direction-container > div:active {
+  transform: scale(0.75);
+}
+
+#directions {
+  font-size: 1.2rem;
+}
+
 </style>
