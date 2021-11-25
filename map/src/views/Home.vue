@@ -10,15 +10,15 @@
     </div>
     
     <div class="direction-container">
-      <div @click="newMapNW()"><h1 id="directions">NW</h1></div>
-      <div @click="newMapNorth()"><h1 id="directions">N</h1></div>
-      <div @click="newMapNE()"><h1 id="directions">NE</h1></div>
-      <div @click="newMapWest()"><h1 id="directions">W</h1></div>
+      <div @click="newMap('NW')"><h1 class="directions">NW</h1></div>
+      <div @click="newMap('N')"><h1 class="directions">N</h1></div>
+      <div @click="newMap('NE')"><h1 class="directions">NE</h1></div>
+      <div @click="newMap('W')"><h1 class="directions">W</h1></div>
       <div class="div-no-color"></div>
-      <div @click="newMapEast()"><h1 id="directions">E</h1></div>
-      <div @click="newMapSW()"><h1 id="directions">SW</h1></div>
-      <div @click="newMapSouth()"><h1 id="directions">S</h1></div>
-      <div @click="newMapSE()"><h1 id="directions">SE</h1></div>
+      <div @click="newMap('E')"><h1 class="directions">E</h1></div>
+      <div @click="newMap('SW')"><h1 class="directions">SW</h1></div>
+      <div @click="newMap('S')"><h1 class="directions">S</h1></div>
+      <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
@@ -164,12 +164,8 @@ export default {
         this.latBot,
         this.longRight
       ).then((imageURL) => (this.currentMapURL = imageURL));
-
-      this.runSprite();
     },
-    runSprite() {
-      const spriteNumber = this.spriteInstance;
-      this.spriteInstance++;
+    loadSprite() {
       // sprite attributes
       // for reference: sprite is 14px by 17px (multiply this by scale)
       const scale = 1.5;
@@ -195,11 +191,7 @@ export default {
       let positionY = 0;
       let img = new Image();
 
-      const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
-      const latTop = this.latTop;
-      const latBot = this.latBot;
-      const longLeft = this.longLeft;
-      const longRight = this.longRight;
+      //const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
 
       window.addEventListener("keydown", keyDownListener);
       function keyDownListener(event) {
@@ -282,7 +274,7 @@ export default {
         //console.log(`Sprite Pixels: ${positionX + (scaled_width / 2)}, ${positionY + (scaled_height * 3 / 4)}`);
 
         // Gets sprite pixels WITH offset
-        const spritePixelX = positionX + (scaled_width / 2);
+        /* const spritePixelX = positionX + (scaled_width / 2);
         const spritePixelY = positionY + (scaled_height * 3 / 4);
 
         const percentX = spritePixelX / elMapRectangle.width;
@@ -296,8 +288,8 @@ export default {
         const latitude = (latTop + percentY * latRange).toFixed(2);
         const longitude = (longLeft + percentX * longRange).toFixed(2);
 
-        console.log(`Instance ${spriteNumber}: ${latitude}, ${longitude}`);
-
+        console.log(`${latitude}, ${longitude}`);
+ */
 
         window.requestAnimationFrame(gameLoop);
       }
@@ -328,7 +320,7 @@ export default {
   },
 
   mounted() {
-    this.runSprite();
+    this.loadSprite();
   },
 };
 
@@ -412,7 +404,7 @@ body {
   transform: scale(0.5);
 }
 
-#directions {
+.directions {
   font-size: 1.2rem;
 }
 
