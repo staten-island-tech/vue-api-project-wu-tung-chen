@@ -2,7 +2,7 @@
   <div>
     <h1> {{ pinData.lat }}, {{ pinData.long }} </h1>
     <h2> {{ pinData.county }}, {{ pinData.region }}, {{ pinData.country }}</h2>
-    <div class="pin2"> {{ pinData.pin }} </div>
+    <!-- <div class="pin2"></div> -->
   </div>
 </template>
 
@@ -36,7 +36,7 @@ h2 {
   height: auto;
 }
 
-.pin2 {
+/* .pin2 {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -57,5 +57,6 @@ h2 {
   left: -6px;
   border: 10px solid transparent;
   border-top: 17px solid #fff;
-}
+} */
+
 </style>
