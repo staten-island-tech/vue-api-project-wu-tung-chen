@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h1> {{ pinData.lat }}, {{ pinData.long }} </h1>
-    <h2> {{ pinData.county }}, {{ pinData.region }}, {{ pinData.country }}</h2>
+  <div :style="percentages">
+    <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
+    <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2>
+    <!-- <div class="pin2"></div> -->
   </div>
 </template>
 
@@ -10,11 +11,28 @@
 export default {
   name: 'Pin',
   props: {
-    pinData: {
-        type: Object,
-        required: true,
+    locationData: {
+      type: Object,
+      required: true,
+    },
+    currentMapBounds: {
+      type: Object,
+      required: true,
     }
-  }
+  },
+  data() {
+    return {
+    }
+  },
+  computed: {
+    percentages() {
+      return {
+        left: (this.locationData.clickedLong - this.currentMapBounds.longLeft)/(this.currentMapBounds.longRight - this.currentMapBounds.longLeft) * 100,
+
+        top: (this.locationData.clickedLat - this.currentMapBounds.latTop)/(this.currentMapBounds.latBot - this.currentMapBounds.latTop) * 100,
+      }
+    },
+  },
 }
 
 </script>
@@ -23,41 +41,20 @@ export default {
 
 <style scoped>
 
-h1 {
-  font-size: 2rem;
+div {
+  width: 10rem;
+  height: 5rem;
 }
 
-h2 {
+h1 {
   font-size: 1.5rem;
 }
 
-/* .pin1 {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-left: -115px;
-  
-  border-radius: 50% 50% 50% 0;
-  border: 4px solid #fff;
-  width: 20px;
-  height: 20px;
-  transform: rotate(-45deg);
+h2 {
+  font-size: 1.3rem;
 }
 
-.pin1::after {
-  position: absolute;
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  margin-left: -5px;
-  margin-top: -5px;
-  background-color: #fff;
-}
-
-.pin2 {
+/* .pin2 {
   position: absolute;
   top: 40%;
   left: 50%;

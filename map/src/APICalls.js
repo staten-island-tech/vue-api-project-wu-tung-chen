@@ -7,7 +7,7 @@ export default {
   async getMap(latTop, longLeft, latBot, longRight) {
     try {
       const response = await fetch(
-        `http://www.mapquestapi.com/staticmap/v4/getmap?key=${mapQuestKey}&bestfit=${latTop},${longLeft},${latBot},${longRight}&size=1000,600`,
+        `http://www.mapquestapi.com/staticmap/v5/map?key=${mapQuestKey}&boundingBox=${latTop},${longLeft},${latBot},${longRight}&size=1000,600`,
         {
           method: "GET",
         }
@@ -42,6 +42,7 @@ export default {
       );
 
       const DataJSON = await response.json();
+
       return DataJSON.data[0];
     } catch (error) {
       // error
