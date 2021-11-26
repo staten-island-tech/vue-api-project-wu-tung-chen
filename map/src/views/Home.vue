@@ -26,6 +26,10 @@
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 
+    <!-- <audio id="volume" controls loop autoplay>
+        <source src="../assets/music/october.mp3" type="audio/mp3">
+    </audio>  -->
+
   </div>
 </template>
 
@@ -394,6 +398,12 @@ export default {
 
   mounted() {
     this.loadSprite();
+
+    // change volume of music
+
+    const audio = document.getElementById("volume");
+    audio.volume = 0.9;
+
   },
 };
 
@@ -412,6 +422,14 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
 }
+
+/* #volume {
+  width: 3.1rem;
+  height: 1.5rem;
+  margin-top: -1.5rem;
+  margin-right: 67.5rem;
+  position: relative;
+} */
 
 .home {
   display: flex;

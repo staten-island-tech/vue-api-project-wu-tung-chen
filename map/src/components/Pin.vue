@@ -44,14 +44,16 @@ export default {
 div {
   width: 10rem;
   height: 5rem;
+  margin: 0.3rem;
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 h2 {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  margin-top: -1rem;
 }
 
 /* .pin2 {
