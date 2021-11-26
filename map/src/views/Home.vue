@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-    <div class="map-container" @click="addPin($event)">
-      <img class="quest-map" :src="mapURL" alt="Map"/>
-      <div id="canvas">
+    <div class="map-container">
+      <img class="quest-map" :src="mapURL" alt="Map" @click="addPin(getCoords($event))"/>
+      <div class="canvas-container">
         <canvas width="1120" height="672">
           <img src />
         </canvas>
       </div>
       <div class="pin-container">
-        <Pin v-for="(pin, index) in pins" :key="index" :pinData="pin"></Pin>
+        <Pin v-for="(location, index) in locations" :key="index" :locationData="location" :currentMapBounds="mapBounds"></Pin>
       </div>
     </div>
     
@@ -41,10 +41,23 @@ export default {
   },
   data() {
     return {
-      latTop: 50,
-      latBot: 25,
-      longLeft: -125,
-      longRight: -65,
+
+      // Expected Projection - Coordinate bounds given to the map
+      mapBounds: {
+        latTop: 50,
+        latBot: 25,
+        longLeft: -125,
+        longRight: -65,
+      },
+
+      // Actual Projection - Real coordinate bounds of the returned map
+      
+      /* mapBounds: {
+        latTop: 55,
+        latBot: 14,
+        longLeft: -140,
+        longRight: -50,
+      }, */
 
       latInc: 15,
       longInc: 36,
@@ -52,24 +65,25 @@ export default {
       sourceMap: require("@/assets/map-us.jpg"),
       currentMapURL: null,
 
-      pins: [
+      locations: [
         {
-          lat: 39,
-          long: 126,
-          county: "Kangdong",
-          region: "Pyongyang",
-          country: "NK",
+          lat: 36.97,
+          long: -92.30,
+
+          clickedLat: 36.96,
+          clickedLong: -92.29,
+
+          county: "Douglass County",
+          region: "Missouri",
+          region_code: "MO",
+          country: "United States",
+          country_code: "USA",
         }
       ]
     };
   },
 
   methods: {
-
-    addPin($event){
-      this.$event = $event
-    },
-    
     getCoords(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
 
@@ -79,75 +93,103 @@ export default {
       const percentX = pixelsX / elRect.width;
       const percentY = pixelsY / elRect.height;
 
-      const latRange = this.latBot - this.latTop;
-      const longRange = this.longRight - this.longLeft;
+      const latRange = this.mapBounds.latBot - this.mapBounds.latTop;
+      const longRange = this.mapBounds.longRight - this.mapBounds.longLeft;
 
       // Calculates lat/long and rounds to 2 decimal
 
-      const latitude = (this.latTop + percentY * latRange).toFixed(2);
-      const longitude = (this.longLeft + percentX * longRange).toFixed(2);
+      const latitude = Number((this.mapBounds.latTop + percentY * latRange).toFixed(2));
+      const longitude = Number((this.mapBounds.longLeft + percentX * longRange).toFixed(2));
 
       console.log(`${latitude}, ${longitude}`);
 
-      APICalls.getPlaceData(
-          latitude,
-          longitude
-        ).then((locationData) => (this.pins.push({
-          lat: locationData.latitude.toFixed(2),
-          long: locationData.longitude.toFixed(2),
-          county: locationData.county,
-          region: locationData.region_code,
-          country: locationData.country_code,
-      })));
+      return {
+        latitude: latitude,
+        longitude: longitude,
+      }
+    },
 
+    addPin(coordinateObj){
+      APICalls.getPlaceData(
+        coordinateObj.latitude,
+        coordinateObj.longitude
+      ).then((locationData) => {
+        // If the location has a county then log that, otherwise log the name of the marine area
+        if (locationData.county) {
+          this.locations.push({
+              lat: Number(locationData.latitude.toFixed(2)),
+              long: Number(locationData.longitude.toFixed(2)),
+
+              clickedLat: coordinateObj.latitude,
+              clickedLong: coordinateObj.longitude,
+
+              county: locationData.county,
+              region: locationData.region,
+              region_code: locationData.region_code,
+              country: locationData.country,
+              country_code: locationData.country_code,
+            })
+        } else {
+          // The location will be of type marine area or ocean
+          this.locations.push({
+            lat: locationData.latitude.toFixed(2),
+            long: locationData.longitude.toFixed(2),
+
+            clickedLat: coordinateObj.latitude,
+            clickedLong: coordinateObj.longitude,
+
+            name: locationData.name,
+          })
+        }
+      });
     },
 
     newMap(direction) {
       // Changes lat/long based on input direction
       switch (direction.toUpperCase()) {
         case "N":
-          this.latTop += this.latInc;
-          this.latBot += this.latInc;
+          this.mapBounds.latTop += this.latInc;
+          this.mapBounds.latBot += this.latInc;
           break;
         case "S":
-          this.latTop -= this.latInc;
-          this.latBot -= this.latInc;
+          this.mapBounds.latTop -= this.latInc;
+          this.mapBounds.latBot -= this.latInc;
           break;
         case "E":
-          this.longLeft += this.longInc;
-          this.longRight += this.longInc;
+          this.mapBounds.longLeft += this.longInc;
+          this.mapBounds.longRight += this.longInc;
           break;
         case "W":
-          this.longLeft -= this.longInc;
-          this.longRight -= this.longInc;
+          this.mapBounds.longLeft -= this.longInc;
+          this.mapBounds.longRight -= this.longInc;
           break;
         case "NE":
-          this.latTop += this.latInc * 0.7;
-          this.latBot += this.latInc * 0.7;
+          this.mapBounds.latTop += this.latInc * 0.7;
+          this.mapBounds.latBot += this.latInc * 0.7;
 
-          this.longLeft += this.longInc * 0.7;
-          this.longRight += this.longInc * 0.7;
+          this.mapBounds.longLeft += this.longInc * 0.7;
+          this.mapBounds.longRight += this.longInc * 0.7;
           break;
         case "NW":
-          this.latTop += this.latInc * 0.7;
-          this.latBot += this.latInc * 0.7;
+          this.mapBounds.latTop += this.latInc * 0.7;
+          this.mapBounds.latBot += this.latInc * 0.7;
 
-          this.longLeft -= this.longInc * 0.7;
-          this.longRight -= this.longInc * 0.7;
+          this.mapBounds.longLeft -= this.longInc * 0.7;
+          this.mapBounds.longRight -= this.longInc * 0.7;
           break;
         case "SE":
-          this.latTop -= this.latInc * 0.7;
-          this.latBot -= this.latInc * 0.7;
+          this.mapBounds.latTop -= this.latInc * 0.7;
+          this.mapBounds.latBot -= this.latInc * 0.7;
 
-          this.longLeft += this.longInc * 0.7;
-          this.longRight += this.longInc * 0.7;
+          this.mapBounds.longLeft += this.longInc * 0.7;
+          this.mapBounds.longRight += this.longInc * 0.7;
           break;
         case "SW":
-          this.latTop -= this.latInc * 0.7;
-          this.latBot -= this.latInc * 0.7;
+          this.mapBounds.latTop -= this.latInc * 0.7;
+          this.mapBounds.latBot -= this.latInc * 0.7;
 
-          this.longLeft -= this.longInc * 0.7;
-          this.longRight -= this.longInc * 0.7;
+          this.mapBounds.longLeft -= this.longInc * 0.7;
+          this.mapBounds.longRight -= this.longInc * 0.7;
           break;
         default: 
           console.log(`Error: newMap() Invalid Direction: ${direction.toUpperCase()}`);
@@ -157,38 +199,38 @@ export default {
       // COORDINATE BOUND
 
       // If latitudeTop is ABOVE north pole, cap it to the north pole
-      if (this.latTop > 85) {
-        this.latTop = 85;
-        this.latBot = this.latTop - this.latInc;
+      if (this.mapBounds.latTop > 85) {
+        this.mapBounds.latTop = 85;
+        this.mapBounds.latBot = this.mapBounds.latTop - this.latInc;
       }
 
       // If latitudeBot is BELOW south pole, cap it to the south pole
-      if (this.latBot < -85) {
-        this.latBot = -85;
-        this.latTop = this.latBot + this.latInc;
+      if (this.mapBounds.latBot < -85) {
+        this.mapBounds.latBot = -85;
+        this.mapBounds.latTop = this.mapBounds.latBot + this.latInc;
       }
 
       // If longitude is greater than 180deg East, convert to deg West (negative degrees)
-      if (this.longLeft > 180) {
-        this.longLeft -= 360;
+      if (this.mapBounds.longLeft > 180) {
+        this.mapBounds.longLeft -= 360;
       }
-      if (this.longRight > 180) {
-        this.longRight -= 360;
+      if (this.mapBounds.longRight > 180) {
+        this.mapBounds.longRight -= 360;
       }
 
       // If longitude is less than 180deg West (negative degrees), convert to deg East
-      if (this.longLeft < -180) {
-        this.longLeft += 360;
+      if (this.mapBounds.longLeft < -180) {
+        this.mapBounds.longLeft += 360;
       }
-      if (this.longRight < -180) {
-        this.longRight += 360;
+      if (this.mapBounds.longRight < -180) {
+        this.mapBounds.longRight += 360;
       }
 
       APICalls.getMap(
-        this.latTop,
-        this.longLeft,
-        this.latBot,
-        this.longRight
+        this.mapBounds.latTop,
+        this.mapBounds.longLeft,
+        this.mapBounds.latBot,
+        this.mapBounds.longRight
       ).then((imageURL) => (this.currentMapURL = imageURL));
 
     },
@@ -390,9 +432,11 @@ body {
   height: 100%;
 }
 
-#canvas {
+.canvas-container {
   position: absolute;
   margin-top: -42.2rem;
+
+  pointer-events: none;
 }
 
 .direction-container {
@@ -452,10 +496,12 @@ body {
 
   display: flex;
   justify-content: center;
-  width: 70rem;
-  height: 42rem;
+  width: 100%;
+  height: 100%;
   position: absolute;
   margin-top: -42.3rem;
+
+  pointer-events: none;
 }
 
 </style>

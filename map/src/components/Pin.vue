@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1> {{ pinData.lat }}, {{ pinData.long }} </h1>
-    <h2> {{ pinData.county }}, {{ pinData.region }}, {{ pinData.country }}</h2>
+  <div :style="percentages">
+    <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
+    <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2>
     <!-- <div class="pin2"></div> -->
   </div>
 </template>
@@ -11,11 +11,28 @@
 export default {
   name: 'Pin',
   props: {
-    pinData: {
-        type: Object,
-        required: true,
+    locationData: {
+      type: Object,
+      required: true,
+    },
+    currentMapBounds: {
+      type: Object,
+      required: true,
     }
-  }
+  },
+  data() {
+    return {
+    }
+  },
+  computed: {
+    percentages() {
+      return {
+        left: (this.locationData.clickedLong - this.currentMapBounds.longLeft)/(this.currentMapBounds.longRight - this.currentMapBounds.longLeft) * 100,
+
+        top: (this.locationData.clickedLat - this.currentMapBounds.latTop)/(this.currentMapBounds.latBot - this.currentMapBounds.latTop) * 100,
+      }
+    },
+  },
 }
 
 </script>
