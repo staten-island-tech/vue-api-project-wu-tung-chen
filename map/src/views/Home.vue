@@ -401,8 +401,8 @@ export default {
 
     // change volume of music
 
-    const audio = document.getElementById("volume");
-    audio.volume = 0.9;
+    // const audio = document.getElementById("volume");
+    // audio.volume = 0.9;
 
   },
 };
