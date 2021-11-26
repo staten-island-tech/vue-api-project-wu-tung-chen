@@ -498,6 +498,8 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
+  max-width: 70rem;
+  max-height: 42rem;
   position: absolute;
   margin-top: -42.3rem;
 
