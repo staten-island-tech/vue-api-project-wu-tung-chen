@@ -244,7 +244,7 @@ export default {
       // sprite attributes
       // for reference: sprite is 14px by 17px (multiply this by scale)
 
-      const scale = 1.5;
+      const scale = 1.8;
       const width = 32;
       const height = 48;
       const scaled_width = scale * width;
@@ -498,7 +498,7 @@ body {
 }
 
 .direction-container > div:active {
-  transform: scale(0.7);
+  transform: scale(0.3);
 }
 
 .directions {
