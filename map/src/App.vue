@@ -1,10 +1,16 @@
 <template>
   <div id="app">
+
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+
+    <audio id="volume" controls loop autoplay muted>
+        <source src="../src/assets/music/october.mp3" type="audio/mp3">
+    </audio> 
+
   </div>
 </template>
 
@@ -16,6 +22,16 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#volume {
+  width: 3.1rem;
+  height: 1.5rem;
+  bottom: 10rem;
+  right: 0.3rem;
+  margin-bottom: -1rem;
+  margin-right: 67.5rem;
+  position: relative;
 }
 
 #nav {

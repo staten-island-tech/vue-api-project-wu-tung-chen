@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <div class="map-container" @click="addPin($event)">
+
+    <div class="map-container" @click="addPin($event) & getCoords($event)">
       <img class="quest-map" :src="mapURL" alt="Map"/>
       <div id="canvas">
         <canvas width="1120" height="672">
@@ -25,6 +26,10 @@
     </div>
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+
+    <!-- <audio id="volume" controls loop autoplay>
+        <source src="../assets/music/october.mp3" type="audio/mp3">
+    </audio>  -->
 
   </div>
 </template>
@@ -221,7 +226,7 @@ export default {
       let positionY = 0;
       let img = new Image();
 
-      //const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
+      // const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
 
       window.addEventListener("keydown", keyDownListener);
       function keyDownListener(event) {
@@ -352,6 +357,9 @@ export default {
 
   mounted() {
     this.loadSprite();
+
+    // const audio = document.getElementById("volume");
+    // audio.volume = 0.4;
   },
 };
 
@@ -370,6 +378,14 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
 }
+
+/* #volume {
+  width: 3.1rem;
+  height: 1.5rem;
+  margin-top: -1.5rem;
+  margin-right: 67.5rem;
+  position: relative;
+} */
 
 .home {
   display: flex;

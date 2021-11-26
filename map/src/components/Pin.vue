@@ -24,16 +24,19 @@ export default {
 
 <style scoped>
 
-h1 {
-  font-size: 2rem;
-  width: 70rem;
+div {
+  width: 10rem;
   height: auto;
+  margin: 0.3rem;
+}
+
+h1 {
+  font-size: 1.5rem;
 }
 
 h2 {
-  font-size: 1.5rem;
-  width: 70rem;
-  height: auto;
+  font-size: 1.2rem;
+  margin-top: -1rem;
 }
 
 /* .pin2 {
