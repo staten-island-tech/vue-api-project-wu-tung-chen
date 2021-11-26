@@ -41,16 +41,17 @@ export default {
 
 <style scoped>
 
+div {
+  width: 10rem;
+  height: 5rem;
+}
+
 h1 {
-  font-size: 2rem;
-  width: 70rem;
-  height: auto;
+  font-size: 1.5rem;
 }
 
 h2 {
-  font-size: 1.5rem;
-  width: 70rem;
-  height: auto;
+  font-size: 1.3rem;
 }
 
 /* .pin2 {
