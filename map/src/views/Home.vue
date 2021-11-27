@@ -431,6 +431,15 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
 }
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+     }
+}
 
 /* #volume {
   width: 3.1rem;
@@ -462,6 +471,9 @@ body {
   height: 100%;
   position: absolute;
   transform: translate(-50%, 0%);
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .canvas-container {
@@ -470,6 +482,10 @@ body {
   position: absolute;
 
   pointer-events: none;
+
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .direction-container {
@@ -532,6 +548,10 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .pin-container > div {
