@@ -455,6 +455,7 @@ body {
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
+  cursor: url(../assets/genshin_pointer.png), auto;
 }
   
 @keyframes fadeInAnimation {
@@ -464,6 +465,15 @@ body {
     100% {
         opacity: 1;
      }
+}
+
+@keyframes slideInLeft {
+        0% {
+          transform: translateX(-2010%);
+        }
+        100% {
+          transform: translateX(0);
+        }
 }
 
 /* #volume {
@@ -542,9 +552,15 @@ body {
   text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
   color: rgb(11, 3, 41);
-  cursor: pointer;
+  cursor: url(../assets/genshin_pointer.png), auto;
   transition: all 0.5s;
   margin: auto;
+
+  /* animation: 2.5s ease-out 0s 1 slideInLeft; */
+
+  /* animation: fadeInAnimation ease 1.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; */
 }
 
 .direction-container > div:hover{

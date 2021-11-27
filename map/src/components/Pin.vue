@@ -147,9 +147,7 @@ h2 {
   border: 0.64rem solid var(--pin-color);
   width: 0.64rem;
   height: 0.64rem;
-  cursor: pointer;
-
-  cursor: pointer;
+  cursor: url(../assets/genshin_pointer.png), auto;
 
   transform: translate(-50%, -150%);
 }
