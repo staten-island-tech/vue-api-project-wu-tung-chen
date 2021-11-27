@@ -450,7 +450,6 @@ body {
 .quest-map {
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(20, 4, 66, 0.5), rgba(20, 4, 66, 0.5));
 }
 
 .canvas-container {
