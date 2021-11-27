@@ -266,8 +266,8 @@ export default {
       let currentDirection = facing_down;
       let currentLoopIndex = 0;
       let frameCount = 0;
-      let positionX = 0;
-      let positionY = 0;
+      let positionX = 625;
+      let positionY = 267;
       let img = new Image();
 
       //const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
@@ -444,7 +444,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .map-container {
@@ -532,6 +532,10 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.pin-container > div {
+  pointer-events: auto;
 }
 
 </style>

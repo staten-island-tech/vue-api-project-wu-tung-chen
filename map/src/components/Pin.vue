@@ -1,9 +1,11 @@
 <template>
+
   <div id="pin-box" :style="percentages">
     <!-- <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
     <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2> -->
-    <div class="pin"></div>
+  <div class="pin"></div>
   </div>
+
 </template>
 
 <script>
@@ -20,10 +22,25 @@ export default {
       required: true,
     }
   },
+
   data() {
     return {
-    }
+      show: true,
+    };
   },
+  
+  // methods: {
+  //   closeModal() {
+  //     this.show = false;
+  //       document.querySelector("body").classList.remove("overflow-hidden");
+  //   },
+  //       openModal() {
+  //         this.show = true;
+  //         document.querySelector("body").classList.add("overflow-hidden");
+      
+  //   }
+  // },
+
   computed: {
     percentages() {
       return {
@@ -33,6 +50,20 @@ export default {
       }
     },
   },
+
+  // mounted (){
+
+  //   let L = `quest-map`
+
+  //   var map = L.map('pin').setView([36.97, -92.30], 0);
+
+  //   L.tileLayer('http://www.mapquestapi.com/staticmap/v5/map?key=${mapQuestKey}&boundingBox=${latTop},${longLeft},${latBot},${longRight}&size=1000,600'
+  //   ).addTo(map);
+
+  //   L.marker([null, null]).addTo(map)
+  //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+  //   .openPopup();
+  // }
 }
 
 </script>
@@ -63,9 +94,11 @@ h2 {
   border: 0.64rem solid var(--pin-color);
   width: 0.64rem;
   height: 0.64rem;
+  cursor: pointer;
 
   transform: translate(-50%, -150%);
 }
+
 
 .pin::after {
   position: absolute;
@@ -78,5 +111,7 @@ h2 {
   border: 0.8rem solid transparent;
   border-top: 1.36rem solid var(--pin-color);
 }
+
+/* MODAL CSS */
 
 </style>
