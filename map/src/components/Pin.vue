@@ -1,18 +1,25 @@
 <template>
 
   <div id="pin-box" :style="computedPercentages">
-    <!-- <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
-    <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2> -->
-  <div class="pin">
+
+  <div class="pin" @click="showModal = !showModal">
     <transition name="fade">
-      <div class="modal" v-if="show">
-        <div class="backdrop" @click="closeModal()"/>
+      <div class="modal" v-if="showModal">
+        <div class="backdrop"/>
 
         <div class="dialog">
           <div class="header">
+            <p class="pin-coords">
+              {{locationData.lat}},{{locationData.long}}
+            </p>
+            <p v-if="locationData.county" class="pin-info">
+              {{locationData.county}},{{locationData.region}},{{locationData.country}}
+            </p>
+            <p v-else class="pin-info">
+              {{locationData.name}}
+            </p>
+            
             <slot name="header"/>
-            <button type="button" class="close" @click="closeModal()">
-            </button>
           </div>
 
           <div class="body">
@@ -48,19 +55,19 @@ export default {
 
   data() {
     return {
-      show: true,
+      showModal: false,
     };
   },
   
   methods: {
-    closeModal() {
-      this.show = false;
+    /* closeModal() {
+      this.showModal = false;
       document.querySelector("body").classList.remove("overflow-hidden");
     },
     openModal() {
-      this.show = true;
+      this.showModal = true;
       document.querySelector("body").classList.add("overflow-hidden");
-    }
+    } */
   },
 
   computed: {
@@ -197,12 +204,6 @@ h2 {
     display: flex;
     flex-direction: column;
     z-index: 2;
-  }
-
-.close {
-    width: 1rem;
-    height: 1rem;
-    cursor: pointer;
   }
 
 .header {
