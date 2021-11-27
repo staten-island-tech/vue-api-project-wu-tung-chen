@@ -171,7 +171,7 @@ h2 {
 
 .pin-info {
   font-size: 1rem;
-  margin: 1rem;
+  margin-left: 1rem;
 }
 
 /* MODAL CSS */
