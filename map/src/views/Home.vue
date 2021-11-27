@@ -427,7 +427,7 @@ export default {
   mounted() {
     this.loadSprite();
 
-    /* change volume of music */
+    /* change volume of music here!!!!! */
 
     // const audio = document.getElementById("volume");
     // audio.volume = 0.5;

@@ -10,10 +10,10 @@
         <div class="dialog">
           <div class="header">
             <p class="pin-coords">
-              {{locationData.lat}},{{locationData.long}}
+              ({{locationData.lat}}, {{locationData.long}})
             </p>
             <p v-if="locationData.county" class="pin-info">
-              {{locationData.county}},{{locationData.region}},{{locationData.country}}
+              {{locationData.county}}, {{locationData.region}}, {{locationData.country}}
             </p>
             <p v-else class="pin-info">
               {{locationData.name}}
@@ -22,13 +22,13 @@
             <slot name="header"/>
           </div>
 
-          <div class="body">
+          <!-- <div class="body">
             <slot name="body"/>
           </div>
 
           <div class="footer">
             <slot name="footer"/>
-          </div>
+          </div> -->
         </div>
       </div>
     </transition>
@@ -167,6 +167,15 @@ h2 {
   border-top: 1.36rem solid var(--pin-color);
 }
 
+.pin-coords {
+  font-size: 1rem;  
+}
+
+.pin-info {
+  font-size: 1rem;
+  margin: 1rem;
+}
+
 /* MODAL CSS */
 
 .modal {
@@ -181,7 +190,7 @@ h2 {
     z-index: 9;
     overflow-x: hidden;
     overflow-y: auto;
-    transform: translate(-46%, -72%);
+    transform: translate(-48%, -80%);
 }
 
 .backdrop {
@@ -196,8 +205,8 @@ h2 {
 
 .dialog {
     position: relative;
-    width: 7rem;
-    height: 2.2rem;
+    width: 20rem;
+    height: 5rem;
     background-color: #ffffff;
     border-radius: 5px;
     margin: 50px auto;
@@ -209,7 +218,7 @@ h2 {
 .header {
     display: flex;
     align-items: flex-start;
-    justify-content: end;
+    justify-content: center;
     padding: 7px 7px 10px;
   }
 
@@ -227,7 +236,7 @@ h2 {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
 }
 
 .fade-enter,
