@@ -1,4 +1,5 @@
 <template>
+
   <div class="home">
     <div class="map-container">
       <img class="quest-map" :src="mapURL" alt="Map" @click="addPin(getCoords($event))"/>
@@ -27,8 +28,6 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-
     <!-- <audio id="volume" controls loop autoplay>
         <source src="../assets/music/october.mp3" type="audio/mp3">
     </audio>  -->
@@ -37,7 +36,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
+// @ is an alias to /src'
+
 import APICalls from "@/APICalls.js";
 import Pin from '@/components/Pin.vue';
 
@@ -46,6 +47,7 @@ export default {
   components: {
     Pin,
   },
+
   data() {
     return {
 
@@ -125,8 +127,6 @@ export default {
 
           longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
         }
-
-        console.log(`2: ${longitude}`)
 
       } else {
         longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
@@ -290,8 +290,8 @@ export default {
       let currentDirection = facing_down;
       let currentLoopIndex = 0;
       let frameCount = 0;
-      let positionX = 0;
-      let positionY = 0;
+      let positionX = 625;
+      let positionY = 267;
       let img = new Image();
 
       //const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
@@ -377,6 +377,7 @@ export default {
         //console.log(`Sprite Pixels: ${positionX + (scaled_width / 2)}, ${positionY + (scaled_height * 3 / 4)}`);
 
         // Gets sprite pixels WITH offset
+
         /* const spritePixelX = positionX + (scaled_width / 2);
         const spritePixelY = positionY + (scaled_height * 3 / 4);
 
@@ -392,7 +393,7 @@ export default {
         const longitude = (longLeft + percentX * longRange).toFixed(2);
 
         console.log(`${latitude}, ${longitude}`);
- */
+        */
 
         window.requestAnimationFrame(gameLoop);
       }
@@ -426,7 +427,7 @@ export default {
   mounted() {
     this.loadSprite();
 
-    // change volume of music
+    /* change volume of music */
 
     // const audio = document.getElementById("volume");
     // audio.volume = 0.5;
@@ -455,6 +456,15 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
 }
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+     }
+}
 
 /* #volume {
   width: 3.1rem;
@@ -468,7 +478,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .map-container {
@@ -486,6 +496,9 @@ body {
   height: 100%;
   position: absolute;
   transform: translate(-50%, 0%);
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .canvas-container {
@@ -494,6 +507,10 @@ body {
   position: absolute;
 
   pointer-events: none;
+
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .direction-container {
@@ -556,6 +573,14 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+
+  animation: fadeInAnimation ease 4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.pin-container > div {
+  pointer-events: auto;
 }
 
 .pin-container > div {
