@@ -1,4 +1,5 @@
 <template>
+
   <div class="home">
     <div class="map-container">
       <img class="quest-map" :src="mapURL" alt="Map" @click="addPin(getCoords($event))"/>
@@ -37,7 +38,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
+// @ is an alias to /src'
+
 import APICalls from "@/APICalls.js";
 import Pin from '@/components/Pin.vue';
 
@@ -46,6 +49,7 @@ export default {
   components: {
     Pin,
   },
+
   data() {
     return {
 
@@ -353,6 +357,7 @@ export default {
         //console.log(`Sprite Pixels: ${positionX + (scaled_width / 2)}, ${positionY + (scaled_height * 3 / 4)}`);
 
         // Gets sprite pixels WITH offset
+
         /* const spritePixelX = positionX + (scaled_width / 2);
         const spritePixelY = positionY + (scaled_height * 3 / 4);
 
@@ -368,7 +373,7 @@ export default {
         const longitude = (longLeft + percentX * longRange).toFixed(2);
 
         console.log(`${latitude}, ${longitude}`);
- */
+        */
 
         window.requestAnimationFrame(gameLoop);
       }
@@ -402,7 +407,7 @@ export default {
   mounted() {
     this.loadSprite();
 
-    // change volume of music
+    /* change volume of music */
 
     // const audio = document.getElementById("volume");
     // audio.volume = 0.5;

@@ -3,7 +3,30 @@
   <div id="pin-box" :style="percentages">
     <!-- <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
     <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2> -->
-  <div class="pin"></div>
+  <div class="pin">
+    <transition name="fade">
+        <div class="modal" v-if="show">
+          <div class="backdrop" @click="closeModal()"/>
+
+          <div class="dialog">
+            <div class="header">
+              <slot name="header"/>
+              <button type="button" class="close" @click="closeModal()">
+              </button>
+            </div>
+
+            <div class="body">
+              <slot name="body"/>
+            </div>
+
+            <div class="footer">
+              <slot name="footer"/>
+            </div>
+          </div>
+        </div>
+  </transition>
+
+  </div>
   </div>
 
 </template>
@@ -29,17 +52,17 @@ export default {
     };
   },
   
-  // methods: {
-  //   closeModal() {
-  //     this.show = false;
-  //       document.querySelector("body").classList.remove("overflow-hidden");
-  //   },
-  //       openModal() {
-  //         this.show = true;
-  //         document.querySelector("body").classList.add("overflow-hidden");
+  methods: {
+    closeModal() {
+      this.show = false;
+        document.querySelector("body").classList.remove("overflow-hidden");
+    },
+        openModal() {
+          this.show = true;
+          document.querySelector("body").classList.add("overflow-hidden");
       
-  //   }
-  // },
+    }
+  },
 
   computed: {
     percentages() {
@@ -114,4 +137,72 @@ h2 {
 
 /* MODAL CSS */
 
+.modal {
+  position: fixed;
+  /* top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; */
+  z-index: 9;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.backdrop {
+    position: fixed;
+    /* top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; */
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+.dialog {
+    position: relative;
+    width: 150px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+  }
+
+.close {
+    width: 30px;
+    height: 30px;
+  }
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 20px 10px;
+  }
+
+.body {
+    padding: 10px 20px 10px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+.footer {
+    padding: 10px 20px 20px;
+  }
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 </style>
+
+
