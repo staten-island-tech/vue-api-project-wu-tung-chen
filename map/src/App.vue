@@ -9,7 +9,7 @@
     <router-view/>
 
     <audio id="volume" controls loop autoplay muted>
-        <source src="../src/assets/music/october.mp3" type="audio/mp3">
+        <source src="../src/assets/music/jujutsu.mp3" type="audio/mp3">
     </audio> 
 
 <!-- ^^^ can change songs between 'shinkai.mp3' , 'october.mp3' or 'stardew.mp3' ^^^ -->
