@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
 
     <div id="nav">
@@ -45,6 +46,7 @@
   background: linear-gradient(rgba(248, 246, 255, 0.85), rgba(248, 246, 255, 0.85)), url(assets/cherryblossoms.jpg) no-repeat;
   margin-bottom: 0.6rem;
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
+  margin-top: 1rem;
 }
 
 #nav a {

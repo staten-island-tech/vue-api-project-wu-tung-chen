@@ -401,8 +401,8 @@ export default {
 
     // change volume of music
 
-    // const audio = document.getElementById("volume");
-    // audio.volume = 0.9;
+    const audio = document.getElementById("volume");
+    audio.volume = 0.5;
 
   },
 };
@@ -413,7 +413,7 @@ export default {
 
 body {
   margin: 0;
-  height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -435,6 +435,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 }
 
 .map-container {
@@ -443,11 +444,13 @@ body {
   border: 0.5rem solid;
   border-color: rgba(248, 246, 255);
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
+  margin-top: -1rem;
 }
 
 .quest-map {
   width: 100%;
   height: 100%;
+  background: linear-gradient(rgba(20, 4, 66, 0.5), rgba(20, 4, 66, 0.5));
 }
 
 .canvas-container {
