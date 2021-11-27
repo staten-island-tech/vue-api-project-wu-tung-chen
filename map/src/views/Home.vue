@@ -28,8 +28,6 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-
     <!-- <audio id="volume" controls loop autoplay>
         <source src="../assets/music/october.mp3" type="audio/mp3">
     </audio>  -->
@@ -129,8 +127,6 @@ export default {
 
           longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
         }
-
-        console.log(`2: ${longitude}`)
 
       } else {
         longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
