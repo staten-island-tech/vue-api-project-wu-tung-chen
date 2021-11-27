@@ -163,14 +163,18 @@ h2 {
 /* MODAL CSS */
 
 .modal {
-  position: fixed;
-  /* top: 0;
+  /* position: fixed;
+  top: 0;
   right: 0;
-  bottom: 0;
-  left: 0; */
+  bottom: 0
   z-index: 9;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: auto; */
+  position: fixed;
+    z-index: 9;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translate(-46%, -72%);
 }
 
 .backdrop {
@@ -185,7 +189,8 @@ h2 {
 
 .dialog {
     position: relative;
-    width: 150px;
+    width: 7rem;
+    height: 2.2rem;
     background-color: #ffffff;
     border-radius: 5px;
     margin: 50px auto;
@@ -195,15 +200,16 @@ h2 {
   }
 
 .close {
-    width: 30px;
-    height: 30px;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
   }
 
 .header {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    padding: 20px 20px 10px;
+    justify-content: end;
+    padding: 7px 7px 10px;
   }
 
 .body {
@@ -218,11 +224,11 @@ h2 {
     padding: 10px 20px 20px;
   }
 
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
