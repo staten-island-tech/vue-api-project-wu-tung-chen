@@ -1,32 +1,32 @@
 <template>
 
-  <div id="pin-box" :style="percentages">
+  <div id="pin-box" :style="computedPercentages">
     <!-- <h1> {{ locationData.lat }}, {{ locationData.long }} </h1>
     <h2> {{ locationData.county }}, {{ locationData.region }}, {{ locationData.country }}</h2> -->
   <div class="pin">
     <transition name="fade">
-        <div class="modal" v-if="show">
-          <div class="backdrop" @click="closeModal()"/>
+      <div class="modal" v-if="show">
+        <div class="backdrop" @click="closeModal()"/>
 
-          <div class="dialog">
-            <div class="header">
-              <slot name="header"/>
-              <button type="button" class="close" @click="closeModal()">
-              </button>
-            </div>
+        <div class="dialog">
+          <div class="header">
+            <slot name="header"/>
+            <button type="button" class="close" @click="closeModal()">
+            </button>
+          </div>
 
-            <div class="body">
-              <slot name="body"/>
-            </div>
+          <div class="body">
+            <slot name="body"/>
+          </div>
 
-            <div class="footer">
-              <slot name="footer"/>
-            </div>
+          <div class="footer">
+            <slot name="footer"/>
           </div>
         </div>
-  </transition>
-
+      </div>
+    </transition>
   </div>
+
   </div>
 
 </template>
@@ -55,22 +55,45 @@ export default {
   methods: {
     closeModal() {
       this.show = false;
-        document.querySelector("body").classList.remove("overflow-hidden");
+      document.querySelector("body").classList.remove("overflow-hidden");
     },
-        openModal() {
-          this.show = true;
-          document.querySelector("body").classList.add("overflow-hidden");
-      
+    openModal() {
+      this.show = true;
+      document.querySelector("body").classList.add("overflow-hidden");
     }
   },
 
   computed: {
-    percentages() {
-      return {
-        left: `${(this.locationData.clickedLong - this.currentMapBounds. longLeft)/(this.currentMapBounds.longRight - this.currentMapBounds.longLeft) * 100}%`,
+    computedPercentages() {
+      const currentLat = this.locationData.clickedLat;
+      const currentLong = this.locationData.clickedLong;
 
-        top: `${(this.locationData.clickedLat - this.currentMapBounds.latTop)/(this.currentMapBounds.latBot - this.currentMapBounds.latTop) * 100}%`,
+      let latTopBound = this.currentMapBounds.latTop;
+      let latBotBound = this.currentMapBounds.latBot;
+      let longLeftBound = this.currentMapBounds.longLeft;
+      let longRightBound = this.currentMapBounds.longRight;
+      
+      if (longLeftBound > longRightBound) {
+        if (currentLong < 0) longLeftBound-= 360;
+        else longRightBound+= 360;
       }
+
+      const leftPercentage = (currentLong - longLeftBound)/(longRightBound - longLeftBound) * 100;
+      const topPercentage = (currentLat - latTopBound)/(latBotBound - latTopBound) * 100;
+
+      let displayValue = "initial";
+
+      // If it's outside the bounds, the pin will have display none
+      if (leftPercentage < 0 || leftPercentage > 100 || topPercentage < 0 || topPercentage > 100) {
+        displayValue = "none";
+      }
+
+      // Return css styling properties
+      return {
+        left: `${leftPercentage}%`,
+        top: `${topPercentage}%`,
+        display: displayValue,
+      };
     },
   },
 
@@ -117,6 +140,8 @@ h2 {
   border: 0.64rem solid var(--pin-color);
   width: 0.64rem;
   height: 0.64rem;
+  cursor: pointer;
+
   cursor: pointer;
 
   transform: translate(-50%, -150%);
