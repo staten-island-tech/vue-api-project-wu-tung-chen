@@ -2,13 +2,16 @@
   <div class="home">
     <div class="map-container">
       <img class="quest-map" :src="mapURL" alt="Map" @click="addPin(getCoords($event))"/>
+      
+      <div class="pin-abs">
+        <div class="pin-container">
+          <Pin v-for="(location, index) in locations" :key="index" :locationData="location" :currentMapBounds="mapBounds"></Pin>
+        </div>
+      </div>
       <div class="canvas-container">
         <canvas width="1120" height="672">
           <img src />
         </canvas>
-      </div>
-      <div class="pin-container">
-        <Pin v-for="(location, index) in locations" :key="index" :locationData="location" :currentMapBounds="mapBounds"></Pin>
       </div>
     </div>
     
@@ -411,6 +414,12 @@ export default {
 
 <style>
 
+:root {
+  --map-width: 70rem;
+  --map-height: 42rem;
+  --pin-color: #0E40FF;
+}
+
 body {
   margin: 0;
   height: auto;
@@ -441,21 +450,24 @@ body {
 .map-container {
   width: 70rem;
   height: 42rem;
+  position: relative;
+
   border: 0.5rem solid;
   border-color: rgba(248, 246, 255);
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
-  margin-top: -1rem;
 }
 
 .quest-map {
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(20, 4, 66, 0.5), rgba(20, 4, 66, 0.5));
+  position: absolute;
+  transform: translate(-50%, 0%);
 }
 
 .canvas-container {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  margin-top: -42.2rem;
 
   pointer-events: none;
 }
@@ -508,23 +520,18 @@ body {
   font-size: 1.2rem;
 }
 
-.pin-container{
-  /* display: flex; 
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  padding: 1.7rem; */
-
-  display: flex;
-  justify-content: center;
+.pin-abs{
   width: 100%;
   height: 100%;
-  max-width: 70rem;
-  max-height: 42rem;
   position: absolute;
-  margin-top: -42.3rem;
 
   pointer-events: none;
+}
+
+.pin-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 </style>
