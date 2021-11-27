@@ -3,11 +3,3 @@
     
   </div>
 </template>
-
-<style>
-
-/* #volume {
-  visibility: hidden;
-} */
-
-</style>
