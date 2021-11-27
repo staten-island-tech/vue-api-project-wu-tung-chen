@@ -9,7 +9,7 @@
           <div class="backdrop" @click="closeModal()"/>
 
           <div class="dialog">
-            <div class="header"> test
+            <div class="header">
               <slot name="header"/>
               <button type="button" class="close" @click="closeModal()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
@@ -141,24 +141,17 @@ h2 {
   border-top: 1.36rem solid var(--pin-color);
 }
 
-
-
 /* MODAL CSS */
 
 .modal {
-  /* position: fixed;
-  top: 0;
+  position: fixed;
+  /* top: 0;
   right: 0;
-  bottom: 0
+  bottom: 0;
+  left: 0; */
   z-index: 9;
   overflow-x: hidden;
-  overflow-y: auto; */
-
-  position: fixed;
-    z-index: 9;
-    overflow-x: hidden;
-    overflow-y: auto;
-    transform: translate(-46%, -72%);
+  overflow-y: auto;
 }
 
 .backdrop {
@@ -173,8 +166,7 @@ h2 {
 
 .dialog {
     position: relative;
-    width: 7rem;
-    height: 2.2rem;
+    width: 150px;
     background-color: #ffffff;
     border-radius: 5px;
     margin: 50px auto;
@@ -184,8 +176,8 @@ h2 {
   }
 
 .close {
-    width: 1rem;
-    height: 1rem;
+    width: 29px;
+    height: 30px;
     cursor: pointer;
   }
 
