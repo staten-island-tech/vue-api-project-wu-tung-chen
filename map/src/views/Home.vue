@@ -100,20 +100,44 @@ export default {
       const percentX = pixelsX / elRect.width;
       const percentY = pixelsY / elRect.height;
 
+      let longLeftBound = this.mapBounds.longLeft;
+      let longRightBound = this.mapBounds.longRight;
+
       const latRange = this.mapBounds.latBot - this.mapBounds.latTop;
-      const longRange = this.mapBounds.longRight - this.mapBounds.longLeft;
+      let longRange = longRightBound - longLeftBound;
 
-      // Calculates lat/long and rounds to 2 decimal
-
+      // Calculating latitude and rounds to 2 decimals
       const latitude = Number((this.mapBounds.latTop + percentY * latRange).toFixed(2));
-      const longitude = Number((this.mapBounds.longLeft + percentX * longRange).toFixed(2));
+
+      // Calculating longitude and rounds to 2 decimals
+      let longitude;
+
+      if (longLeftBound > longRightBound) {
+        longLeftBound-= 360;
+        let longRange = longRightBound - longLeftBound;
+
+        longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
+
+        if (longitude < -180) {
+          longLeftBound+= 360;
+          longRightBound+= 360;
+          let longRange = longRightBound - longLeftBound;
+
+          longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
+        }
+
+        console.log(`2: ${longitude}`)
+
+      } else {
+        longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
+      }
 
       console.log(`${latitude}, ${longitude}`);
 
-      return {
-        latitude: latitude,
-        longitude: longitude,
-      }
+        return {
+          latitude: latitude,
+          longitude: longitude,
+        }
     },
 
     addPin(coordinateObj){
@@ -532,6 +556,10 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.pin-container > div {
+  pointer-events: auto;
 }
 
 </style>
