@@ -443,6 +443,7 @@ export default {
   --map-width: 70rem;
   --map-height: 42rem;
   --pin-color: #0E40FF;
+  cursor: url(../assets/genshin_pointer.png), auto;
 }
 
 body {
