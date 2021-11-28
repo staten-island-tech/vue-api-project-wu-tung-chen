@@ -283,7 +283,7 @@ export default {
 
       const scale = 1.8;
       const width = 32;
-      const height = 48;
+      const height = 52;
       const scaled_width = scale * width;
       const scaled_height = scale * height;
       const cycle_loop = [0, 1, 2, 3];
@@ -291,7 +291,7 @@ export default {
       const facing_up = 3;
       const facing_left = 1;
       const facing_right = 2;
-      const frame_limit = 9;
+      const frame_limit = 10;
       const movement_speed = 5;
 
       let canvas = document.querySelector("canvas");
@@ -317,7 +317,7 @@ export default {
       }
 
       function loadImage() {
-        img.src = require("@/assets/probably-kenny.png");
+        img.src = require("@/assets/tuxedo.png");
         img.onload = function () {
           window.requestAnimationFrame(gameLoop);
         };
