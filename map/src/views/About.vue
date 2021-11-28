@@ -1,16 +1,25 @@
 <template>
   <div class="about">
 
-    <!-- <div class="search-container">
+    <div class="search-container">
       <div class="mag-glass"></div>
       
+      <form class="search-bar" @submit.prevent="getSearchData(searchQuery)">
       <div class="input">
-        <input type="text" placeholder="Search..." id="searchText">
+        <!-- <input type="text" placeholder="Search..." id="searchText"> -->
+              <input
+        type="text"
+        class="search-area"
+        placeholder="Search..."
+        v-model="searchQuery"
+      />
       </div>
-      <span class="deleteText" onclick="document.getElementById('searchText').value = ''"></span>
-    </div> -->
+      <span class="deleteText" onclick="document.getElementById('.search-area').value = ''"></span>
+      <input type="submit" class="search-submit-btn" value="change this value"/>
+    </form>
+    </div>
 
-    <form
+    <!-- <form
       class="search-bar"
       @submit.prevent="getSearchData(searchQuery)"
     >
@@ -22,7 +31,7 @@
       />
       <span class="deleteText" @click="searchQuery = ''"></span>
       <input type="submit" class="search-submit-btn" value="change this value"/>
-    </form>
+    </form> -->
 
     
 
@@ -43,12 +52,14 @@ export default {
       locations: [],
     }
   },
+
   methods: {
     getSearchData(query) {
       console.log(query);
       /* APICalls.getCoordsData(query).then((locationData) => { */
     }
   },
+  
   mounted: function(){
 
     const previousLocations = JSON.parse(sessionStorage.getItem("locations"));
@@ -57,12 +68,12 @@ export default {
       this.locations = previousLocations;
     }
 
-    /* const glass = document.querySelector('.mag-glass');
+    const glass = document.querySelector('.mag-glass');
     const search = document.querySelector('.search-container');
 
     glass.onclick = function(){
       search.classList.toggle('active')
-    } */
+    } 
 
   }
 }
