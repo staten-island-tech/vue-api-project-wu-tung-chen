@@ -455,7 +455,11 @@ export default {
       this.mapBounds = previousMapBounds;
     }
 
-    this.currentMapURL = sessionStorage.getItem("mapURL");
+    const previousMapURL = sessionStorage.getItem("mapURL");
+
+    if (previousMapURL) {
+      this.currentMapURL = previousMapURL;
+    }
 
     /* change volume of music here!!!!! */
 
