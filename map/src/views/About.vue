@@ -5,37 +5,19 @@
       <div class="mag-glass"></div>
       
       <form class="search-bar" @submit.prevent="getSearchData(searchQuery)">
-      <div class="input">
-        <!-- <input type="text" placeholder="Search..." id="searchText"> -->
-              <input
-        type="text"
-        class="search-area"
-        placeholder="Search..."
-        v-model="searchQuery"
-      />
-      </div>
-      <span class="deleteText" onclick="document.getElementById('.search-area').value = ''"></span>
-      <input type="submit" class="search-submit-btn" value="change this value"/>
+        <div class="input">
+          <!-- <input type="text" placeholder="Search..." id="searchText"> -->
+          <input
+            type="text"
+            class="search-area"
+            placeholder="Search..."
+            v-model="searchQuery"
+          />
+        </div>
+      <span class="deleteText" @click="searchQuery = ''"></span>
     </form>
     </div>
-
-    <!-- <form
-      class="search-bar"
-      @submit.prevent="getSearchData(searchQuery)"
-    >
-      <input
-        type="text"
-        class="search-area"
-        placeholder="Search..."
-        v-model="searchQuery"
-      />
-      <span class="deleteText" @click="searchQuery = ''"></span>
-      <input type="submit" class="search-submit-btn" value="change this value"/>
-    </form> -->
-
-    
-
-    
+  
   </div>
 </template>
 
