@@ -33,7 +33,7 @@ export default {
         require("@/assets/music/shinkai.mp3"),
         require("@/assets/music/stardew.mp3"),
       ],
-      currentSongIndex: 3,
+      currentSongIndex: 1,
     }
   },
   methods: {
@@ -61,8 +61,7 @@ export default {
 #volume {
   width: 3.1rem;
   height: 1.5rem;
-  bottom: 10rem;
-  right: 0.3rem;
+  transform: translate(-10%, -690%);
   margin-bottom: -1rem;
   margin-right: 67.3rem;
   box-shadow: 0 0.3rem 0.5rem rgb(0 0 0 / 40%);
@@ -72,7 +71,7 @@ export default {
 
 #nav {
   padding: 20px;
-  background: linear-gradient(rgba(248, 246, 255, 0.85), rgba(248, 246, 255, 0.85)), url(assets/cherryblossoms.jpg) no-repeat;
+  background: linear-gradient(rgba(248, 246, 255, 0.85), rgba(248, 246, 255, 0.85)), url(assets/cherryblossoms.jpg);
   margin-bottom: 0.6rem;
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
   margin-top: 1.2rem;

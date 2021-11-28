@@ -485,7 +485,7 @@ body {
   flex-direction: column;
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
-  background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
+  background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) repeat center;
   cursor: url(../assets/genshin_pointer.png), auto;
 }
   

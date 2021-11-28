@@ -128,7 +128,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: -2rem;
+  margin-bottom: -9999rem;
 }
 
 * {
@@ -142,7 +142,7 @@ export default {
   position: relative;
   width: 3.75rem;
   height: 3.75rem;
-  margin: 1rem 0rem;
+  margin: 0.4rem 0rem;
 
   background: #fff;
   /* background: linear-gradient(rgba(248, 246, 255, 0.85), rgba(248, 246, 255, 0.85)), url(../assets/cherryblossoms.jpg) no-repeat; */
@@ -248,12 +248,12 @@ export default {
 .table {
   border-collapse: collapse;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   box-shadow: 0 0 1rem #D3D3D3;
 }
 
 .table thead tr {
-  background-color: teal;
+  background: linear-gradient(rgba(52, 110, 163, 0.85), rgba(92, 74, 158, 0.85)), url(../assets/cherryblossoms.jpg) no-repeat top right; 
   color: white;
   text-align: left;
 }
@@ -268,24 +268,28 @@ export default {
 
 .table tbody tr {
   border-bottom: 0.1rem solid #dddddd;
-  background-color: white;
+  background: linear-gradient(rgb(252, 251, 255, 0.95), rgb(252, 251, 255, 0.95)), url(../assets/cherryblossoms.jpg) no-repeat left;
   cursor: pointer;
 }
 
 .table tbody tr:nth-last-of-type(even) {
-  background-color: #f3f3f3;
+  background: linear-gradient(rgba(248, 246, 255, 0.9), rgba(248, 246, 255, 0.9)), url(../assets/cherryblossoms.jpg) no-repeat bottom left;
 }
 
 .table tbody tr:last-of-type {
-  border-bottom: 0.2rem solid #009879;
+  border-bottom: 0.2rem solid rgba(92, 74, 158, 0.85);
 }
 
 /* .table tbody tr:hover {
   background-color: cyan;
 } */
 
+.table .delete-place{
+  transition: all 0.5s;
+}
+
 .table .delete-place:hover {
-  background-color: red;
+  background: linear-gradient(rgba(214, 31, 31, 0.85), rgba(214, 31, 31, 0.85)), url(../assets/cherryblossoms.jpg) no-repeat;
 }
 
 </style>
