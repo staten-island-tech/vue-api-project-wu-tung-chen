@@ -9,8 +9,10 @@
     <router-view/>
 
     <audio id="volume" controls loop autoplay muted>
-        <source src="../src/assets/music/stardew.mp3" type="audio/mp3">
-    </audio> 
+        <source :src="songs[currentSongIndex]" type="audio/mp3">
+    </audio>
+
+    <!-- <button @click="cycleSong()">CHANGE SONG</button> -->
 
 <!-- ^^^ can change songs between 'shinkai.mp3' , 'october.mp3' or 'stardew.mp3' ^^^ -->
 <!-- change the volume in Home.vue, go all the way down to <script></script> -->
@@ -18,6 +20,33 @@
   </div>
 
 </template>
+
+<script>
+
+export default {
+  name: "App",
+  data() {
+    return {
+      songs: [
+        require("@/assets/music/jujutsu.mp3"),
+        require("@/assets/music/october.mp3"),
+        require("@/assets/music/shinkai.mp3"),
+        require("@/assets/music/stardew.mp3"),
+      ],
+      currentSongIndex: 3,
+    }
+  },
+  methods: {
+    cycleSong() {
+      this.currentSongIndex++;
+      if (this.currentSongIndex === this.songs.length) {
+        this.currentSongIndex = 0;
+      }
+    }
+  },
+}
+</script>
+
 
 <style>
 

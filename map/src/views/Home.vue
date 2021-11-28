@@ -172,9 +172,6 @@ export default {
             name: locationData.name,
           })
         }
-
-         // Updates locations in session storage
-        sessionStorage.setItem("locations", JSON.stringify(this.locations));
       });
     },
 
@@ -260,9 +257,6 @@ export default {
         this.mapBounds.longRight += 360;
       }
 
-      // Updates mapBounds in session storage
-      sessionStorage.setItem("mapBounds", JSON.stringify(this.mapBounds));
-
       APICalls.getMap(
         this.mapBounds.latTop,
         this.mapBounds.longLeft,
@@ -270,9 +264,6 @@ export default {
         this.mapBounds.longRight
       ).then((imageURL) => {
         this.currentMapURL = imageURL;
-
-        // Updates mapURL in session storage
-        sessionStorage.setItem("mapURL", this.currentMapURL);
       });
     },
 
@@ -431,6 +422,21 @@ export default {
       // If the map is NOT null, then return it, otherwise return default map.
       if (this.currentMapURL) return this.currentMapURL;
       else return this.sourceMap;
+    },
+  },
+
+  watch: {
+    locations(value) {
+      // Updates locations in session storage
+      sessionStorage.setItem("locations", JSON.stringify(value));
+    },
+    currentMapURL(value) {
+      // Updates mapURL in session storage
+      sessionStorage.setItem("mapURL", value);
+    },
+    mapBounds(value) {
+      // Updates mapBounds in session storage
+      sessionStorage.setItem("mapBounds", JSON.stringify(value));
     },
   },
 
