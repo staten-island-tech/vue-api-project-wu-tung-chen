@@ -24,9 +24,40 @@
       <input type="submit" class="search-submit-btn" value="change this value"/>
     </form>
 
-    
+    <table class="table">
+      <thead class="table-head">
+        <tr>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>County</th>
+          <th>Region</th>
+          <th>Country</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr>
+          <td>36.97</td>
+          <td>-92.29</td>
+          <td>Douglass County</td>
+          <td>Missouri</td>
+          <td>United States</td>
+          <td>RED</td>
+        </tr>
 
-    
+        <tr>
+          <td>36.97</td>
+          <td>-92.29</td>
+          <td>Douglass County</td>
+          <td>Missouri</td>
+          <td>United States</td>
+          <td>RED</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
   </div>
 </template>
 
