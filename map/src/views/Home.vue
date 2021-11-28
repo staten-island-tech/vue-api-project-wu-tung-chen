@@ -132,7 +132,7 @@ export default {
         longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
       }
 
-      console.log(`${latitude}, ${longitude}`);
+      /* console.log(`${latitude}, ${longitude}`); */
 
         return {
           latitude: latitude,
@@ -262,8 +262,9 @@ export default {
         this.mapBounds.longLeft,
         this.mapBounds.latBot,
         this.mapBounds.longRight
-      ).then((imageURL) => (this.currentMapURL = imageURL));
-
+      ).then((imageURL) => {
+        this.currentMapURL = imageURL;
+      });
     },
 
     loadSprite() {
@@ -413,7 +414,7 @@ export default {
         }
         currentDirection = direction;
       }
-    }
+    },
   },
 
   computed: {
@@ -424,8 +425,37 @@ export default {
     },
   },
 
+  watch: {
+    locations(value) {
+      // Updates locations in session storage
+      sessionStorage.setItem("locations", JSON.stringify(value));
+    },
+    currentMapURL(value) {
+      // Updates mapURL in session storage
+      sessionStorage.setItem("mapURL", value);
+    },
+    mapBounds(value) {
+      // Updates mapBounds in session storage
+      sessionStorage.setItem("mapBounds", JSON.stringify(value));
+    },
+  },
+
   mounted() {
     this.loadSprite();
+
+    const previousLocations = JSON.parse(sessionStorage.getItem("locations"));
+
+    if (previousLocations) {
+      this.locations = previousLocations;
+    }
+    
+    const previousMapBounds = JSON.parse(sessionStorage.getItem("mapBounds"));
+
+    if (previousMapBounds) {
+      this.mapBounds = previousMapBounds;
+    }
+
+    this.currentMapURL = sessionStorage.getItem("mapURL");
 
     /* change volume of music here!!!!! */
 
@@ -443,6 +473,7 @@ export default {
   --map-width: 70rem;
   --map-height: 42rem;
   --pin-color: #0E40FF;
+  cursor: url(../assets/genshin_pointer.png), auto;
 }
 
 body {

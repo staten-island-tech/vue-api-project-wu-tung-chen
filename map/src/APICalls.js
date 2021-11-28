@@ -14,6 +14,7 @@ export default {
       ); // This returns an image/jpeg
 
       if (!response.ok) {
+        window.alert(`Map reponse not ok: (Check console)`);
         console.log("Reponse not ok:");
         console.log(response);
       } else {
@@ -30,6 +31,7 @@ export default {
     } catch (error) {
       // error
       console.log(`An MapQuestAPI error has occured: ${error}`);
+      window.alert(`An MapQuestAPI error has occured: ${error}`);
     }
   },
   async getPlaceData(latitude, longitude) {
@@ -47,6 +49,25 @@ export default {
     } catch (error) {
       // error
       console.log(`An PositionstackAPI error has occured: ${error}`);
+      window.alert(`An PositionstackAPI error has occured: ${error}`);
+    }
+  },
+  async getCoordsData(query) {
+    try {
+      const response = await fetch(
+        `http://api.positionstack.com/v1/forward?access_key=${positionstackKey}&query=${query}&limit=1`,
+        {
+          method: "GET",
+        }
+      );
+
+      const DataJSON = await response.json();
+
+      return DataJSON.data[0];
+    } catch (error) {
+      // error
+      console.log(`An PositionstackAPI error has occured: ${error}`);
+      window.alert(`An PositionstackAPI error has occured: ${error}`);
     }
   },
 };
