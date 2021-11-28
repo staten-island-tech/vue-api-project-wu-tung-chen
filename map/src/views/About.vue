@@ -1,28 +1,21 @@
 <template>
   <div class="about">
 
-    <!-- <div class="search-container">
+    <div class="search-container">
       <div class="mag-glass"></div>
-      
-      <div class="input">
-        <input type="text" placeholder="Search..." id="searchText">
-      </div>
-      <span class="deleteText" onclick="document.getElementById('searchText').value = ''"></span>
-    </div> -->
-
-    <form
-      class="search-bar"
-      @submit.prevent="getSearchData(searchQuery)"
-    >
-      <input
-        type="text"
-        class="search-area"
-        placeholder="Search..."
-        v-model="searchQuery"
-      />
-      <span class="deleteText" @click="searchQuery = ''"></span>
-      <input type="submit" class="search-submit-btn" value="change this value"/>
-    </form>
+        <form class="search-bar" @submit.prevent="getSearchData(searchQuery)">
+          <div class="input">
+            <!-- <input type="text" placeholder="Search..." id="searchText"> -->
+            <input
+              type="text"
+              class="search-area"
+              placeholder="Search Place"
+              v-model="searchQuery"
+            />
+          </div>
+          <span class="deleteText" @click="searchQuery = ''"></span>
+        </form>
+    </div>
 
     <table class="table">
       <thead class="table-head">
@@ -32,37 +25,38 @@
           <th>County</th>
           <th>Region</th>
           <th>Country</th>
-          <th>Delete</th>
+          <th>Delete Row</th>
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr>
-          <td>36.97</td>
-          <td>-92.29</td>
-          <td>Douglass County</td>
-          <td>Missouri</td>
-          <td>United States</td>
-          <td>RED</td>
+        <tr v-for="(location, index) in locations"
+          :key="index">
+          <td>{{ location.lat }}</td>
+          <td>{{ location.long }}</td>
+          <td>{{ location.county }}</td>
+          <td>{{ location.region ? location.region : location.name}}</td>
+          <td>{{ location.country }}</td>
+          <td @click="locations.splice(index, 1)" class="delete-place">✖</td>
         </tr>
 
-        <tr>
+        <!-- <tr>
           <td>36.97</td>
           <td>-92.29</td>
           <td>Douglass County</td>
           <td>Missouri</td>
           <td>United States</td>
-          <td>RED</td>
-        </tr>
+          <td class="delete-place">✖</td>
+        </tr> -->
 
       </tbody>
 
     </table>
-
+  
   </div>
 </template>
 
 <script>
-//import APICalls from "@/APICalls.js";
+import APICalls from "@/APICalls.js";
 
 export default {
   name: "About",
@@ -74,12 +68,38 @@ export default {
       locations: [],
     }
   },
+
   methods: {
     getSearchData(query) {
-      console.log(query);
-      /* APICalls.getCoordsData(query).then((locationData) => { */
+      APICalls.getCoordsData(query).then((locationData) => {
+        if (locationData) {
+          this.locations.push({
+          lat: Number(locationData.latitude.toFixed(2)),
+          long: Number(locationData.longitude.toFixed(2)),
+
+          county: locationData.county,
+          region: locationData.region,
+          region_code: locationData.region_code,
+          country: locationData.country,
+          country_code: locationData.country_code,
+          })
+
+          // Clears the search query
+          this.searchQuery = "";
+        } else {
+          window.alert(`No location found with query: ${query}`);
+        }
+      });
     }
   },
+
+  watch: {
+    locations(value) {
+      // Updates locations in session storage
+      sessionStorage.setItem("locations", JSON.stringify(value));
+    },
+  },
+  
   mounted: function(){
 
     const previousLocations = JSON.parse(sessionStorage.getItem("locations"));
@@ -88,12 +108,12 @@ export default {
       this.locations = previousLocations;
     }
 
-    /* const glass = document.querySelector('.mag-glass');
+    const glass = document.querySelector('.mag-glass');
     const search = document.querySelector('.search-container');
 
     glass.onclick = function(){
       search.classList.toggle('active')
-    } */
+    } 
 
   }
 }
@@ -105,9 +125,9 @@ export default {
 <style scoped>
 
 .about {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center; */
+  align-items: center;
   margin-bottom: -2rem;
 }
 
@@ -122,6 +142,8 @@ export default {
   position: relative;
   width: 3.75rem;
   height: 3.75rem;
+  margin: 1rem 0rem;
+
   background: #fff;
   /* background: linear-gradient(rgba(248, 246, 255, 0.85), rgba(248, 246, 255, 0.85)), url(../assets/cherryblossoms.jpg) no-repeat; */
   border-radius: 3.75rem;
@@ -219,6 +241,51 @@ export default {
   height: 0.94rem;
   background: #999;
   transform: rotate(315deg);
+}
+
+/* Table Code */
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+  box-shadow: 0 0 1rem #D3D3D3;
+}
+
+.table thead tr {
+  background-color: teal;
+  color: white;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 1.2rem 1.5rem;
+
+  font-size: 1rem;
+  text-align: center;
+}
+
+.table tbody tr {
+  border-bottom: 0.1rem solid #dddddd;
+  background-color: white;
+  cursor: pointer;
+}
+
+.table tbody tr:nth-last-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+  border-bottom: 0.2rem solid #009879;
+}
+
+/* .table tbody tr:hover {
+  background-color: cyan;
+} */
+
+.table .delete-place:hover {
+  background-color: red;
 }
 
 </style>
