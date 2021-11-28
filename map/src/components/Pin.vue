@@ -72,8 +72,8 @@ export default {
 
   computed: {
     computedPercentages() {
-      const currentLat = this.locationData.clickedLat;
-      const currentLong = this.locationData.clickedLong;
+      const currentLat = this.locationData.clickedLat ? this.locationData.clickedLat : this.locationData.lat;
+      const currentLong = this.locationData.clickedLong ? this.locationData.clickedLong : this.locationData.long;
 
       let latTopBound = this.currentMapBounds.latTop;
       let latBotBound = this.currentMapBounds.latBot;

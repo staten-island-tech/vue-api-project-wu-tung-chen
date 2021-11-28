@@ -132,7 +132,7 @@ export default {
         longitude = Number((longLeftBound + percentX * longRange).toFixed(2));
       }
 
-      console.log(`${latitude}, ${longitude}`);
+      /* console.log(`${latitude}, ${longitude}`); */
 
         return {
           latitude: latitude,
@@ -172,6 +172,9 @@ export default {
             name: locationData.name,
           })
         }
+
+         // Updates locations in session storage
+        sessionStorage.setItem("locations", JSON.stringify(this.locations));
       });
     },
 
@@ -257,13 +260,20 @@ export default {
         this.mapBounds.longRight += 360;
       }
 
+      // Updates mapBounds in session storage
+      sessionStorage.setItem("mapBounds", JSON.stringify(this.mapBounds));
+
       APICalls.getMap(
         this.mapBounds.latTop,
         this.mapBounds.longLeft,
         this.mapBounds.latBot,
         this.mapBounds.longRight
-      ).then((imageURL) => (this.currentMapURL = imageURL));
+      ).then((imageURL) => {
+        this.currentMapURL = imageURL;
 
+        // Updates mapURL in session storage
+        sessionStorage.setItem("mapURL", this.currentMapURL);
+      });
     },
 
     loadSprite() {
@@ -413,7 +423,7 @@ export default {
         }
         currentDirection = direction;
       }
-    }
+    },
   },
 
   computed: {
@@ -426,6 +436,20 @@ export default {
 
   mounted() {
     this.loadSprite();
+
+    const previousLocations = JSON.parse(sessionStorage.getItem("locations"));
+
+    if (previousLocations) {
+      this.locations = previousLocations;
+    }
+    
+    const previousMapBounds = JSON.parse(sessionStorage.getItem("mapBounds"));
+
+    if (previousMapBounds) {
+      this.mapBounds = previousMapBounds;
+    }
+
+    this.currentMapURL = sessionStorage.getItem("mapURL");
 
     /* change volume of music here!!!!! */
 

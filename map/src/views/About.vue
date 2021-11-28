@@ -1,35 +1,68 @@
 <template>
   <div class="about">
 
-    <div class="search-container">
+    <!-- <div class="search-container">
       <div class="mag-glass"></div>
+      
       <div class="input">
         <input type="text" placeholder="Search..." id="searchText">
       </div>
       <span class="deleteText" onclick="document.getElementById('searchText').value = ''"></span>
-    </div>
+    </div> -->
+
+    <form
+      class="search-bar"
+      @submit.prevent="getSearchData(searchQuery)"
+    >
+      <input
+        type="text"
+        class="search-area"
+        placeholder="Search..."
+        v-model="searchQuery"
+      />
+      <span class="deleteText" @click="searchQuery = ''"></span>
+      <input type="submit" class="search-submit-btn" value="change this value"/>
+    </form>
+
+    
+
     
   </div>
 </template>
 
 <script>
-
-// import APICalls from "@/APICalls.js";
+//import APICalls from "@/APICalls.js";
 
 export default {
   name: "About",
   components: {
-
   },
-
+  data() {
+    return {
+      searchQuery: "",
+      locations: [],
+    }
+  },
+  methods: {
+    getSearchData(query) {
+      console.log(query);
+      /* APICalls.getCoordsData(query).then((locationData) => { */
+    }
+  },
   mounted: function(){
 
-    const glass = document.querySelector('.mag-glass');
+    const previousLocations = JSON.parse(sessionStorage.getItem("locations"));
+
+    if (previousLocations) {
+      this.locations = previousLocations;
+    }
+
+    /* const glass = document.querySelector('.mag-glass');
     const search = document.querySelector('.search-container');
 
     glass.onclick = function(){
       search.classList.toggle('active')
-    }
+    } */
 
   }
 }
