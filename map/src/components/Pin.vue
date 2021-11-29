@@ -12,13 +12,21 @@
             <p class="pin-coords">
               ({{locationData.lat}}, {{locationData.long}})
             </p>
+            <!-- <p v-if="locationData.country" class="pin-info">
+              {{ locationData.county }}, {{locationData.region}}, {{locationData.country}}
+            </p> -->
             <p v-if="locationData.county" class="pin-info">
-              {{locationData.county}}, {{locationData.region}}, {{locationData.country}}
+              {{ locationData.county }},
+            </p>
+            <p v-if="locationData.region" class="pin-info">
+              {{ locationData.region }},
+            </p>
+            <p v-if="locationData.country" class="pin-info">
+              {{ locationData.country }}
             </p>
             <p v-else class="pin-info">
-              {{locationData.name}}
+              {{ locationData.name }}
             </p>
-            
             <slot name="header"/>
           </div>
 
@@ -59,17 +67,6 @@ export default {
     };
   },
   
-  methods: {
-    /* closeModal() {
-      this.showModal = false;
-      document.querySelector("body").classList.remove("overflow-hidden");
-    },
-    openModal() {
-      this.showModal = true;
-      document.querySelector("body").classList.add("overflow-hidden");
-    } */
-  },
-
   computed: {
     computedPercentages() {
       const currentLat = this.locationData.clickedLat ? this.locationData.clickedLat : this.locationData.lat;
@@ -120,8 +117,6 @@ export default {
 }
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
 

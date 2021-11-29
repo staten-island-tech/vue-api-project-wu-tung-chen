@@ -28,10 +28,6 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
-    <!-- <audio id="volume" controls loop autoplay>
-        <source src="../assets/music/october.mp3" type="audio/mp3">
-    </audio>  -->
-
   </div>
 </template>
 
@@ -82,11 +78,9 @@ export default {
           clickedLat: 36.96,
           clickedLong: -92.29,
 
-          county: "Douglass County",
-          region: "Missouri",
-          region_code: "MO",
-          country: "United States",
-          country_code: "USA",
+          county: "Douglas",
+          region: "MO",
+          country: "US",
         }
       ]
     };
@@ -140,7 +134,7 @@ export default {
         }
     },
 
-    addPin(coordinateObj){
+    /* addPin(coordinateObj){
       APICalls.getPlaceData(
         coordinateObj.latitude,
         coordinateObj.longitude
@@ -170,6 +164,36 @@ export default {
             clickedLong: coordinateObj.longitude,
 
             name: locationData.name,
+          })
+        }
+      });
+    }, */
+    addPin(coordinateObj){
+      APICalls.getPlaceData(
+        coordinateObj.latitude,
+        coordinateObj.longitude
+      ).then((locationData) => {
+        if (locationData.locations[0].adminArea4) {
+          this.locations.push({
+            lat: Number(locationData.locations[0].latLng.lat.toFixed(2)),
+            long: Number(locationData.locations[0].latLng.lng.toFixed(2)),
+
+            clickedLat: locationData.providedLocation.latLng.lat,
+            clickedLong: locationData.providedLocation.latLng.lng,
+
+            county: locationData.locations[0].adminArea4,
+            region: locationData.locations[0].adminArea3,
+            country: locationData.locations[0].adminArea1,
+          })
+        } else {
+          this.locations.push({
+            lat: Number(locationData.locations[0].latLng.lat.toFixed(2)),
+            long: Number(locationData.locations[0].latLng.lng.toFixed(2)),
+
+            clickedLat: locationData.providedLocation.latLng.lat,
+            clickedLong: locationData.providedLocation.latLng.lng,
+
+            name: "Unknown",
           })
         }
       });
@@ -447,6 +471,8 @@ export default {
 
     if (previousLocations) {
       this.locations = previousLocations;
+    } else {
+      sessionStorage.setItem("locations", JSON.stringify(this.locations))
     }
     
     const previousMapBounds = JSON.parse(sessionStorage.getItem("mapBounds"));
@@ -455,11 +481,15 @@ export default {
       this.mapBounds = previousMapBounds;
     }
 
-    this.currentMapURL = sessionStorage.getItem("mapURL");
+    const previousMapURL = sessionStorage.getItem("mapURL");
+
+    if (previousMapURL) {
+      this.currentMapURL = previousMapURL;
+    }
 
     /* change volume of music here!!!!! */
 
-    // const audio = document.getElementById("volume");
+    // const audio = document.getElementById("audio");
     // audio.volume = 0.5;
 
   },
@@ -485,35 +515,27 @@ body {
   flex-direction: column;
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
-  background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) no-repeat center;
+  background: linear-gradient(rgba(20, 4, 66, 0.4), rgba(20, 4, 66, 0.4)), url(../assets/travelers.jpg) repeat center;
   cursor: url(../assets/genshin_pointer.png), auto;
 }
   
 @keyframes fadeInAnimation {
-    0% {
-        opacity: 0.1;
+  0% {
+      opacity: 0.1;
+  }
+  100% {
+      opacity: 1;
     }
-    100% {
-        opacity: 1;
-     }
 }
 
 @keyframes slideInLeft {
-        0% {
-          transform: translateX(-2010%);
-        }
-        100% {
-          transform: translateX(0);
-        }
+  0% {
+    transform: translateX(-2010%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-
-/* #volume {
-  width: 3.1rem;
-  height: 1.5rem;
-  margin-top: -1.5rem;
-  margin-right: 67.5rem;
-  position: relative;
-} */
 
 .home {
   display: flex;
