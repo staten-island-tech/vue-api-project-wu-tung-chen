@@ -1,5 +1,5 @@
 const mapQuestKey = process.env.VUE_APP_MAPQUEST_API_KEY;
-const positionstackKey = process.env.VUE_APP_POSITIONSTACK_API_KEY;
+//const positionstackKey = process.env.VUE_APP_POSITIONSTACK_API_KEY;
 
 let previousMapURL = null;
 
@@ -52,10 +52,10 @@ export default {
       window.alert(`A MapQuest Geocoding API error has occured: ${error}`);
     }
   },
-  async getRealCoordsData(query) {
+  async getCoordsData(query) {
     try {
       const response = await fetch(
-        `http://www.mapquestapi.com/geocoding/v1/address?key=${mapQuestKey}&location=${query}&thumbMaps=false&mapResults=1`,
+        `https://www.mapquestapi.com/geocoding/v1/address?key=${mapQuestKey}&location=${query}&thumbMaps=false&mapResults=1`,
         {
           method: "GET",
         }
@@ -88,7 +88,8 @@ export default {
       window.alert(`An PositionstackAPI error has occured: ${error}`);
     }
   }, */
-  async getCoordsData(query) {
+
+  /* async getCoordsData(query) {
     try {
       const response = await fetch(
         `http://api.positionstack.com/v1/forward?access_key=${positionstackKey}&query=${query}&limit=1`,
@@ -105,5 +106,5 @@ export default {
       console.log(`An PositionstackAPI error has occured: ${error}`);
       window.alert(`An PositionstackAPI error has occured: ${error}`);
     }
-  },
+  }, */
 };
