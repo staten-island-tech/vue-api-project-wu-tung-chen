@@ -82,11 +82,9 @@ export default {
           clickedLat: 36.96,
           clickedLong: -92.29,
 
-          county: "Douglass County",
-          region: "Missouri",
-          region_code: "MO",
-          country: "United States",
-          country_code: "USA",
+          county: "Douglas",
+          region: "MO",
+          country: "US",
         }
       ]
     };
@@ -140,7 +138,7 @@ export default {
         }
     },
 
-    addPin(coordinateObj){
+    /* addPin(coordinateObj){
       APICalls.getPlaceData(
         coordinateObj.latitude,
         coordinateObj.longitude
@@ -172,6 +170,37 @@ export default {
             name: locationData.name,
           })
         }
+      });
+    }, */
+    addPin(coordinateObj){
+      APICalls.getPlaceData(
+        coordinateObj.latitude,
+        coordinateObj.longitude
+      ).then((locationData) => {
+        if (locationData.locations[0].adminArea4) {
+          this.locations.push({
+            lat: Number(locationData.locations[0].latLng.lat.toFixed(2)),
+            long: Number(locationData.locations[0].latLng.lng.toFixed(2)),
+
+            clickedLat: locationData.providedLocation.latLng.lat,
+            clickedLong: locationData.providedLocation.latLng.lng,
+
+            county: `${locationData.locations[0].adminArea4} County`,
+            region: locationData.locations[0].adminArea3,
+            country: locationData.locations[0].adminArea1,
+          })
+        } else {
+          this.locations.push({
+            lat: Number(locationData.locations[0].latLng.lat.toFixed(2)),
+            long: Number(locationData.locations[0].latLng.lng.toFixed(2)),
+
+            clickedLat: locationData.providedLocation.latLng.lat,
+            clickedLong: locationData.providedLocation.latLng.lng,
+
+            name: "Ocean",
+          })
+        }
+        
       });
     },
 
@@ -447,6 +476,8 @@ export default {
 
     if (previousLocations) {
       this.locations = previousLocations;
+    } else {
+      sessionStorage.setItem("locations", JSON.stringify(this.locations))
     }
     
     const previousMapBounds = JSON.parse(sessionStorage.getItem("mapBounds"));

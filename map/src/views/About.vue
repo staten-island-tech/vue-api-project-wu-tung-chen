@@ -65,7 +65,19 @@ export default {
   data() {
     return {
       searchQuery: "",
-      locations: [],
+      locations: [
+        {
+          lat: 36.97,
+          long: -92.30,
+
+          clickedLat: 36.96,
+          clickedLong: -92.29,
+
+          county: "Douglas",
+          region: "MO",
+          country: "US",
+        }
+      ],
     }
   },
 
@@ -106,6 +118,8 @@ export default {
 
     if (previousLocations) {
       this.locations = previousLocations;
+    } else {
+      sessionStorage.setItem("locations", JSON.stringify(this.locations))
     }
 
     const glass = document.querySelector('.mag-glass');
