@@ -36,7 +36,7 @@ export default {
         require("@/assets/music/stardew-ghost-synth.mp3"),
         require("@/assets/music/flower-dance.mp3"),
       ],
-      currentSongIndex: 4,
+      currentSongIndex: 3,
     }
   },
   methods: {
