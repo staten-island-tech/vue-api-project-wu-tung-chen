@@ -55,7 +55,7 @@ export default {
   async getRealCoordsData(query) {
     try {
       const response = await fetch(
-        `http://api.positionstack.com/v1/forward?access_key=${positionstackKey}&query=${query}&limit=1`,
+        `http://www.mapquestapi.com/geocoding/v1/address?key=${mapQuestKey}&location=${query}&thumbMaps=false&mapResults=1`,
         {
           method: "GET",
         }
@@ -63,7 +63,7 @@ export default {
 
       const DataJSON = await response.json();
 
-      return DataJSON.data[0];
+      return DataJSON.results[0];
     } catch (error) {
       // error
       console.log(`An PositionstackAPI error has occured: ${error}`);

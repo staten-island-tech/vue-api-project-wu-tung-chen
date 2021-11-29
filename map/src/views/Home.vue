@@ -28,10 +28,6 @@
       <div @click="newMap('SE')"><h1 class="directions">SE</h1></div>
     </div>
 
-    <!-- <audio id="volume" controls loop autoplay>
-        <source src="../assets/music/october.mp3" type="audio/mp3">
-    </audio>  -->
-
   </div>
 </template>
 
@@ -185,7 +181,7 @@ export default {
             clickedLat: locationData.providedLocation.latLng.lat,
             clickedLong: locationData.providedLocation.latLng.lng,
 
-            county: `${locationData.locations[0].adminArea4} County`,
+            county: locationData.locations[0].adminArea4,
             region: locationData.locations[0].adminArea3,
             country: locationData.locations[0].adminArea1,
           })
@@ -197,10 +193,9 @@ export default {
             clickedLat: locationData.providedLocation.latLng.lat,
             clickedLong: locationData.providedLocation.latLng.lng,
 
-            name: "Ocean",
+            name: "Unknown",
           })
         }
-        
       });
     },
 
@@ -494,7 +489,7 @@ export default {
 
     /* change volume of music here!!!!! */
 
-    // const audio = document.getElementById("volume");
+    // const audio = document.getElementById("audio");
     // audio.volume = 0.5;
 
   },
@@ -525,30 +520,22 @@ body {
 }
   
 @keyframes fadeInAnimation {
-    0% {
-        opacity: 0.1;
+  0% {
+      opacity: 0.1;
+  }
+  100% {
+      opacity: 1;
     }
-    100% {
-        opacity: 1;
-     }
 }
 
 @keyframes slideInLeft {
-        0% {
-          transform: translateX(-2010%);
-        }
-        100% {
-          transform: translateX(0);
-        }
+  0% {
+    transform: translateX(-2010%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-
-/* #volume {
-  width: 3.1rem;
-  height: 1.5rem;
-  margin-top: -1.5rem;
-  margin-right: 67.5rem;
-  position: relative;
-} */
 
 .home {
   display: flex;
