@@ -83,7 +83,7 @@ export default {
 
   methods: {
     getSearchData(query) {
-      APICalls.getRealCoordsData(query).then((locationData) => {
+      APICalls.getCoordsData(query).then((locationData) => {
         if (locationData) {
           this.locations.push({
             lat: Number(locationData.locations[0].latLng.lat.toFixed(2)),
