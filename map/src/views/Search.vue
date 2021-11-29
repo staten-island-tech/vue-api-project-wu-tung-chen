@@ -59,7 +59,7 @@
 import APICalls from "@/APICalls.js";
 
 export default {
-  name: "About",
+  name: "Search",
   components: {
   },
   data() {
