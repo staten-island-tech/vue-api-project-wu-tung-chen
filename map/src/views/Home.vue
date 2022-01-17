@@ -67,6 +67,9 @@ export default {
       latInc: 15,
       longInc: 36,
 
+      currentX: null,
+      currentY: null,
+
       sourceMap: require("@/assets/map-us.jpg"),
       currentMapURL: null,
 
@@ -90,11 +93,11 @@ export default {
     getCoords(event) {
       const elRect = event.currentTarget.getBoundingClientRect();
 
-      const pixelsX = event.clientX - elRect.left;
-      const pixelsY = event.clientY - elRect.top;
+      /* const pixelsX = event.clientX - elRect.left;
+      const pixelsY = event.clientY - elRect.top; */
 
-      const percentX = pixelsX / elRect.width;
-      const percentY = pixelsY / elRect.height;
+      const percentX = (this.currentX + 30) / elRect.width;
+      const percentY = (this.currentY + 95) / elRect.height;
 
       let longLeftBound = this.mapBounds.longLeft;
       let longRightBound = this.mapBounds.longRight;
@@ -319,6 +322,11 @@ export default {
       let positionY = 267;
       let img = new Image();
 
+      const self = this;
+
+      self.currentX = positionX;
+      self.currentY = positionY;
+
       //const elMapRectangle = document.querySelector(".map-container").getBoundingClientRect();
 
       window.addEventListener("keydown", keyDownListener);
@@ -437,6 +445,11 @@ export default {
           positionY += deltaY;
         }
         currentDirection = direction;
+
+        console.log(positionX, positionY);
+
+        self.currentX = positionX;
+        self.currentY = positionY;
       }
     },
   },
